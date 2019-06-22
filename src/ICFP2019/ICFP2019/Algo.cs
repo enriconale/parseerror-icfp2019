@@ -33,7 +33,7 @@ namespace ICFP2019
             // collezione il booster se wrappy ci sta sopra
             int i = boosters.FindIndex((kvp) => kvp.Value == wrappy.Loc);
             if (i >= 0) collectedBoosters.Add(boosters[i].Key);
-
+            // TODO: usare subito i booster semplici: fastwheel e manip
         }
 
         public void updateMap()
@@ -44,6 +44,12 @@ namespace ICFP2019
                 map[wrappy.absolutePosition(p)] = Tile.Filled;
             }
         }
+
+        public List<Action> computeActions(Goal g)
+        {
+            return null;
+        }
+
 
 
     }

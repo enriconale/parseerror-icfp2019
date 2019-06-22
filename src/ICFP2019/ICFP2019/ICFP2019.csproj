@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Algo.cs" />
     <Compile Include="Data.cs" />
+    <Compile Include="Dijkstra.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
