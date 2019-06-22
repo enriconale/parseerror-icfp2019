@@ -28,16 +28,16 @@ namespace ICFP2019
             updateStatus();
         }
 
-        public void updateStatus()
+        private void updateStatus()
         {
             updateMap();
-            // collezione il booster se wrappy ci sta sopra
+            // colleziona il booster se wrappy ci sta sopra
             int i = boosters.FindIndex((kvp) => kvp.Value == wrappy.Loc);
             if (i >= 0) collectedBoosters.Add(boosters[i].Key);
             // TODO: usare subito i booster semplici: fastwheel e manip
         }
 
-        public void updateMap()
+        private void updateMap()
         {
             map[wrappy.Loc] = Tile.Filled;
             foreach (Point p in wrappy.Manips)
@@ -52,7 +52,7 @@ namespace ICFP2019
             {
                 Goal.GoTo goTo = (Goal.GoTo) g;
                 int x = goTo.Item1, y = goTo.Item2;
-                int dist = DistTo(x, y);
+                //int dist = DistTo(x, y);
                 // CONTINUA...
                 
             }
