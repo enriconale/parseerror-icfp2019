@@ -8,8 +8,6 @@ using System.Threading.Tasks;
 
 namespace ICFP2019
 {
-    
-
     class Program
     {
         public static void Main(string[] args)
@@ -19,13 +17,13 @@ namespace ICFP2019
                 System.Console.Out.WriteLine("IL PRIMO ARGOMENTO DEVE ESSERE IL NOME DEL FILE");
                 return;
             }
-                if (File.Exists(args[0]))
-                {
-                    string problem = File.ReadAllText(args[0]);
-                    Status status = Parser.parseProblem(problem);
 
-
-                }
+            if (File.Exists(args[0]))
+            {
+                string problem = File.ReadAllText(args[0]);
+                Status status = Parser.parseProblem(problem);
+                StupidPrettyPrinter.printParsedMap(status.map);
+            }
         }
     }
 }
