@@ -11,45 +11,62 @@ namespace ICFP2019
     {
         private static List<Line> verticalLines = new List<Line>();
         private static List<Line> horizontalLines = new List<Line>();
+        private static int maxX = 0;
+        private static int maxY = 0;
 
         public static Status parseProblem(String problem) {
-            var le = problem.Split('#');
+            var problemElements = problem.Split('#');
             List<String> obst = new List<string>();
-            for (int i = 2; i < le.Length; i++)
+            for (int i = 2; i < problemElements.Length; i++)
             {
-                if (le[i].StartsWith("(")) obst.Add(le[i]);
+                if (problemElements[i].StartsWith("(")) obst.Add(problemElements[i]);
             }
-            var map = Parser.parseMap(le[0], obst);
-            var status = new Status(map);
+            var map = Parser.parseMap(problemElements[0], obst);
+            var status = new Status(map, new Point(problemElements[1]));
 
             throw new Exception();
         }
 
         public static Map<Tile> parseMap(String map, List<String> obstacles) {
-            var lines = parseLine(map);
-            foreach (var ls in obstacles.Select(x => { return parseLine(x); }))
+            parseLine(map);
+            foreach (var ob in obstacles)
             {
-                lines.AddRange(ls);
+                parseLine(ob);
             }
-            
-
-            throw new Exception();
-        }
-
-        public static List<Line> parseLine(String ls) {
-            ls = ls.Substring(1, ls.Length - 2);
-            var lines = Regex.Split(ls, @"\),\(");
-            List<Line> result = new List<Line>();
-            var points = lines.ToList().Select<String,Vertex>(x => { return new Vertex(x); }).ToList<Vertex>();
-            for (int i = 0; i < points.Count; i++)
+            var result = new Map<Tile>(maxX,maxY);
+            for (int x = 0; x < maxX; x++)
             {
-                if (i == points.Count - 1 ) {
-                    result.Add(new Line(points[i], points[0]));
-                } else { 
-                    result.Add(new Line(points[i], points[i+1]));
+                for (int y = 0; y < maxY; y++)
+                {
+                    var p = new Point(x, y);
+                    var horizLinesBelow = horizontalLines.FindAll(l => { return l.intersect(p) && l.isBelow(p); }).Count;
+                    var vertLinesbelow = verticalLines.FindAll(l => { return l.intersect(p) && l.isBelow(p); }).Count;
+                    if (horizLinesBelow % 2 == 1 && vertLinesbelow % 2 == 1) result[x, y] = Tile.Empty;
+                    else result[x, y] = Tile.Obstacle;
                 }
             }
+
             return result;
+        }
+
+        public static void parseLine(String ls) {
+            ls = ls.Substring(1, ls.Length - 2);
+            var lines = Regex.Split(ls, @"\),\(");
+            var vertexes = lines.ToList().Select<String,Vertex>(x => { return new Vertex(x); }).ToList<Vertex>();
+            for (int i = 0; i < vertexes.Count; i++)
+            {
+                var v = vertexes[i];
+                if (maxX < v.x) maxX = v.x;
+                if (maxX < v.y) maxX = v.y;
+                Line l;
+                if (i == vertexes.Count - 1 ) {
+                    l = new Line(vertexes[i], vertexes[0]);
+                } else { 
+                    l = new Line(vertexes[i], vertexes[i+1]);
+                }
+                if (l.isVertical()) verticalLines.Add(l);
+                else horizontalLines.Add(l);
+            }
         }
 
 
@@ -126,11 +143,11 @@ namespace ICFP2019
             return (s.x == e.x && p.y <= s.y) || (s.y == e.y && p.x <= s.x);
         }
 
-        public bool isBetween(float a, float b, float v) {
+        private bool isBetween(float a, float b, float v) {
             return (a <= v && v < b) || (a > v && v >= b);
         }
 
-        public bool isBetween(int a, int b, int v)
+        private bool isBetween(int a, int b, int v)
         {
             return (a <= v && v < b) || (a > v && v >= b);
         }
