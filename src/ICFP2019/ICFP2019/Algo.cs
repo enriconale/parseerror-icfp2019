@@ -29,7 +29,7 @@ namespace ICFP2019
         {
             foreach (Point p in wrappy.Manips)
             {
-//                int x = wrappy.Loc.x + p.x 
+                map[wrappy.absolutePosition(p)] = Tile.Filled;
             }
         }
 

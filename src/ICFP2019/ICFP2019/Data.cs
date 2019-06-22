@@ -24,6 +24,18 @@ namespace ICFP2019
             Array.Clear(a, 0, w * h);
         }
 
+        public T this[Point p]
+        {
+            get
+            {
+                return this[p.x, p.y];
+            }
+            set
+            {
+                this[p.x, p.y] = value;
+            }
+        }
+
         public T this[int x, int y]
         {
             get
@@ -73,7 +85,18 @@ namespace ICFP2019
             dir = (Dir)(((int) dir + 3) % 4);
         }
 
-         
+        public Point absolutePosition(Point p)
+        {
+            int x = Loc.x, y = Loc.y;
+            switch (Dir)
+            {
+                case Dir.E: x += p.x; y += p.y; break;
+                case Dir.N: x += -p.y; y += p.x; break;
+                case Dir.W: x += -p.x; y += -p.y; break;
+                case Dir.S: x += p.y; y += -p.x; break;
+            }
+            return new Point(x, y);
+        }
     }
 
     public partial class Status
