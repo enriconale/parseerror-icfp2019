@@ -55,6 +55,11 @@ namespace ICFP2019
                     return "W";
                 case Booster.Teleport:
                     return "T";
+                case Booster.Cloning:
+                    return "C";
+                case Booster.CloningPlatform:
+                    return "X";
+                
                 default:
                     return "";
             }
