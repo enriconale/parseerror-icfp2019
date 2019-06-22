@@ -19,13 +19,14 @@ namespace ICFP2019
                 System.Console.Out.WriteLine("IL PRIMO ARGOMENTO DEVE ESSERE IL NOME DEL FILE");
                 return;
             }
-                if (File.Exists(args[0]))
-                {
-                    string problem = File.ReadAllText(args[0]);
-                    Status status = Parser.parseProblem(problem);
+
+            if (File.Exists(args[0]))
+            {
+                string problem = File.ReadAllText(args[0]);
+                Status status = Parser.parseProblem(problem);
 
 
-                }
+            }
         }
     }
 }
