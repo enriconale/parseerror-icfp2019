@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,8 +14,18 @@ namespace ICFP2019
     {
         public static void Main(string[] args)
         {
-            var t = Regex.Split("(6,10),(8,10),(8,1),(11,1),(11,10),(12,10),(12,14),(15,14),(15,15),", @"\),\(");
-            System.Console.Out.WriteLine(t);
+            if (args.Length == 0)
+            {
+                System.Console.Out.WriteLine("IL PRIMO ARGOMENTO DEVE ESSERE IL NOME DEL FILE");
+                return;
+            }
+                if (File.Exists(args[0]))
+                {
+                    string problem = File.ReadAllText(args[0]);
+                    Status status = Parser.parseProblem(problem);
+
+
+                }
         }
     }
 }

@@ -14,17 +14,14 @@ namespace ICFP2019
         private static int maxX = 0;
         private static int maxY = 0;
 
+
+
         public static Status parseProblem(String problem) {
             var problemElements = problem.Split('#');
-            List<String> obst = new List<string>();
-            for (int i = 2; i < problemElements.Length; i++)
-            {
-                if (problemElements[i].StartsWith("(")) obst.Add(problemElements[i]);
-            }
-            var map = Parser.parseMap(problemElements[0], obst);
-            var status = new Status(map, new Point(problemElements[1]));
+            var map = Parser.parseMap(problemElements[0], problemElements[2].Split(';').ToList());
+            var status = new Status(map, new Point(problemElements[1].Substring(1,problemElements[1].Length-2)));
 
-            throw new Exception();
+            return status;
         }
 
         public static Map<Tile> parseMap(String map, List<String> obstacles) {
