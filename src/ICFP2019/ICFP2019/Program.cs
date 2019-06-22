@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ICFP2019
 {
-    class Program
+    partial class Program
     {
         public static void Main(string[] args)
         {
@@ -16,33 +16,22 @@ namespace ICFP2019
             String problemTempSolutions = ".tmp";
             String problemSolution = ".sol";
 
-            if (args.Length == 0)
+            if (File.Exists(problemPath + problemExtension))
             {
-                System.Console.Out.WriteLine("IL PRIMO ARGOMENTO DEVE ESSERE IL NOME DEL FILE");
-                return;
-            }
-
-            if (File.Exists(args[0] + problemExtension))
-            {
-                string problem = File.ReadAllText(args[0] + problemExtension);
+                string problem = File.ReadAllText(problemPath + problemExtension);
                 string[] tempSolutions = null;
-                if (File.Exists(args[0] + problemTempSolutions))
+                if (File.Exists(problemPath + problemTempSolutions))
                 {
-                    tempSolutions = File.ReadAllLines(args[0] + problemTempSolutions);
+                    tempSolutions = File.ReadAllLines(problemPath + problemTempSolutions);
                 }
                 Status status = Parser.parseProblem(problem);
-                if (args.Length >= 2 && File.Exists(args[1]))
+                if (!"".Equals(stupidPrinterOutputPath))
                 {
-                    StupidPrettyPrinter.printParsedMap(status.map, status.boosters, args[1]);
-                }
-                else
-                {
-                    System.Console.Out.WriteLine("Fornisci (opzionale) un path per il file per il pretty printer");
+                    StupidPrettyPrinter.printParsedMap(status.map, status.boosters, stupidPrinterOutputPath);
                 }
 
                 StatisticalPrettyPrinter.printStats(status);
             }
         }
-
     }
 }
