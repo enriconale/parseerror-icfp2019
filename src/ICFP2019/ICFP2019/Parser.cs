@@ -25,8 +25,13 @@ namespace ICFP2019
         }
 
         private static List<KeyValuePair<Booster, Point>> parseBoosters(String boosters){
-            var bl = boosters.Split(';');
             var result = new List<KeyValuePair<Booster, Point>>();
+            if ("".Equals(boosters))
+            {
+                return result;
+            }
+
+            var bl = boosters.Split(';');
             foreach (var b in bl)
             {
                 var type = b.Substring(0, 1);

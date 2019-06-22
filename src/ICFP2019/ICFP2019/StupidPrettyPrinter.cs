@@ -6,7 +6,8 @@ namespace ICFP2019
 {
     public class StupidPrettyPrinter
     {
-        public static void printParsedMap(Map<Tile> parsedMap, List<KeyValuePair<Booster, Point>> boosters, string printerPath)
+        public static void printParsedMap(Map<Tile> parsedMap, List<KeyValuePair<Booster, Point>> boosters,
+            string printerPath)
         {
             System.IO.StreamWriter file =
                 new System.IO.StreamWriter(printerPath, false);
@@ -18,8 +19,10 @@ namespace ICFP2019
                 {
                     mappedBoosters.Add(boosterLocation.x, new Dictionary<int, string>());
                 }
+
                 mappedBoosters[boosterLocation.x].Add(boosterLocation.y, getMappedStringValue(booster.Key));
             }
+
             for (int i = parsedMap.H - 1; i >= 0; i--)
             {
                 for (int j = 0; j < parsedMap.W; j++)
@@ -32,7 +35,6 @@ namespace ICFP2019
                             tileText = mappedBoosters[j][i];
                         }
                         file.Write(tileText);
-                        
                     }
                     else
                     {
@@ -59,7 +61,7 @@ namespace ICFP2019
                     return "C";
                 case Booster.CloningPlatform:
                     return "X";
-                
+
                 default:
                     return "";
             }
