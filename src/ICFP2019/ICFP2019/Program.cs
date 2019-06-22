@@ -39,6 +39,8 @@ namespace ICFP2019
                 {
                     System.Console.Out.WriteLine("Fornisci (opzionale) un path per il file per il pretty printer");
                 }
+
+                StatisticalPrettyPrinter.printStats(status);
             }
         }
 

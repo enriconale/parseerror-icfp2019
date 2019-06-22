@@ -66,9 +66,9 @@ namespace ICFP2019
 
     public class Wrappy
     {
-        private Point loc;
-        private Dir dir;
-        private List<Point> manips;
+        public Point loc;
+        public Dir dir;
+        public List<Point> manips;
 
         public Wrappy(Point loc)
         {
