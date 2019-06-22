@@ -19,9 +19,13 @@ namespace ICFP2019
         public static Status parseProblem(String problem) {
             var problemElements = problem.Split('#');
             var map = Parser.parseMap(problemElements[0], problemElements[2].Split(';').ToList());
-            var status = new Status(map, new Point(problemElements[1].Substring(1,problemElements[1].Length-2)));
+            var status = new Status(map, new Point(problemElements[1].Substring(1, problemElements[1].Length - 2)), parseBoosters(problemElements[3]));
 
             return status;
+        }
+
+        private static List<KeyValuePair<Booster, Point>> parseBoosters(String boosters){
+            return null;//TODO
         }
 
         public static Map<Tile> parseMap(String map, List<String> obstacles) {
@@ -47,6 +51,7 @@ namespace ICFP2019
         }
 
         public static void parseLine(String ls) {
+            if (ls.Length == 0) return;
             ls = ls.Substring(1, ls.Length - 2);
             var lines = Regex.Split(ls, @"\),\(");
             var vertexes = lines.ToList().Select<String,Vertex>(x => { return new Vertex(x); }).ToList<Vertex>();
@@ -54,7 +59,7 @@ namespace ICFP2019
             {
                 var v = vertexes[i];
                 if (maxX < v.x) maxX = v.x;
-                if (maxX < v.y) maxX = v.y;
+                if (maxY < v.y) maxY = v.y;
                 Line l;
                 if (i == vertexes.Count - 1 ) {
                     l = new Line(vertexes[i], vertexes[0]);
@@ -126,7 +131,7 @@ namespace ICFP2019
         }
 
         public bool isVertical() {
-            return s.x == s.y;
+            return s.x == e.x;
         }
 
 
@@ -137,7 +142,7 @@ namespace ICFP2019
 
         public bool isBelow(Point p)
         {
-            return (s.x == e.x && p.y <= s.y) || (s.y == e.y && p.x <= s.x);
+            return (s.x == e.x && p.x < s.x) || (s.y == e.y && p.y < s.y);
         }
 
         private bool isBetween(float a, float b, float v) {
