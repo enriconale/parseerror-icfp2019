@@ -10,7 +10,7 @@ namespace ICFP2019
 
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
         }
     }
