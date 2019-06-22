@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace ICFP2019.Dijkstra
 {
 
-    public struct Edge
+    public class Edge
     {
         public short V2, Length;
 
     }
 
-    public struct Vertex
+    public class Vertex
     {
         public short Id;
         public List<Edge> OutgoingEdges;
@@ -29,7 +29,7 @@ namespace ICFP2019.Dijkstra
 
         internal short idAt(int x, int y)
         {
-            return (short)(x + y * map.H);
+            return (short)(x + y * map.W);
         }
 
         internal Edge edgeAt(int x, int y)
@@ -59,7 +59,6 @@ namespace ICFP2019.Dijkstra
                 }
         }
 
-
         public int N
         {
             get
@@ -68,12 +67,20 @@ namespace ICFP2019.Dijkstra
             }
         }
 
-        public int ShortestPath(Vertex v)
+
+        public Map<int> CalculateMap(Point p)
         {
-            int min = short.MaxValue;
+            return CalculateMap(vertices[idAt(p.x, p.y)]);
+        }
+
+
+        private Map<int> CalculateMap(Vertex v)
+        {
+            Map<int> distMap = new Map<int>(map.W, map.H);
+            //int min = short.MaxValue;
             var crossingEdges = new MinHeap<short, short>(N);
             var minVertices = new bool[N];
-            minVertices[v.Id - 1] = true;
+            minVertices[v.Id] = true;
 
             foreach (var outgoingEdge in v.OutgoingEdges)
             {
@@ -86,14 +93,17 @@ namespace ICFP2019.Dijkstra
                 var minEdge = crossingEdges.ExtractMin();
 
                 short v2 = minEdge.Key;
-                var newVertex = vertices[v2 - 1];
-                minVertices[v2 - 1] = true;
-                if (minEdge.Value < min)
-                    min = minEdge.Value;
+                var newVertex = vertices[v2];
+                distMap[v2 % map.W, v2 / map.W] = minEdge.Value;
+
+
+                minVertices[v2] = true;
+                //if (minEdge.Value < min)
+                //    min = minEdge.Value;
 
                 foreach (var newEdge in newVertex.OutgoingEdges)
                 {
-                    if (minVertices[newEdge.V2 - 1])
+                    if (minVertices[newEdge.V2])
                         continue;
 
                     var edgeLength = (short)(newEdge.Length + minEdge.Value);
@@ -102,7 +112,9 @@ namespace ICFP2019.Dijkstra
                     if (edge != null)
                     {
                         if (edgeLength < edge.Value)
+                        {
                             crossingEdges.Update(newEdge.V2, edgeLength);
+                        }
                     }
                     else
                     {
@@ -110,7 +122,8 @@ namespace ICFP2019.Dijkstra
                     }
                 }
             }
-            return min;
+
+            return distMap;
         }
 
     }

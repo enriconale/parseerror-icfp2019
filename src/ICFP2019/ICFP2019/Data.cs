@@ -1,4 +1,5 @@
 ﻿
+using ICFP2019.Dijkstra;
 using System;
 using System.Collections.Generic;
 
@@ -114,6 +115,7 @@ namespace ICFP2019
     public partial class Status
     {
         public Map<Tile> map;
+        private Map<int> distMap;
         private Wrappy wrappy;
         private readonly List<KeyValuePair<Booster, Point>> boosters;
         private List<Booster> collectedBoosters = new List<Booster>();
@@ -128,6 +130,17 @@ namespace ICFP2019
         }
 
         public Map<Tile> Map { get => map; set => map = value; }
+
+        internal void updateDistMap()
+        {
+            Graph graph = new Graph(map);
+            distMap = graph.CalculateMap(wrappy.Loc);
+        }
+
+        public int DistTo(int x, int y)
+        {
+            return distMap[x, y];
+        }
     }
 
 }

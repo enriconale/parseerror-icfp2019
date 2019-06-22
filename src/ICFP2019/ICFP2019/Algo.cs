@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using ICFP2019.Dijkstra;
 
 namespace ICFP2019
 {
@@ -47,6 +48,14 @@ namespace ICFP2019
 
         public List<Action> computeActions(Goal g)
         {
+            if (g.IsGoTo)
+            {
+                Goal.GoTo goTo = (Goal.GoTo) g;
+                int x = goTo.Item1, y = goTo.Item2;
+                int dist = DistTo(x, y);
+                // CONTINUA...
+                
+            }
             return null;
         }
 
