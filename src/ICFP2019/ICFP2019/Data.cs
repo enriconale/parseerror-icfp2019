@@ -62,14 +62,14 @@ namespace ICFP2019
 
     public enum Booster
     {
-        Manipulator, FastWheels, Teleport, Drill
+        Manipulator, FastWheels, Teleport, Drill, Cloning, CloningPlatform
     }
 
     public class Wrappy
     {
-        private Point loc;
-        private Dir dir;
-        private List<Point> manips;
+        public Point loc;
+        public Dir dir;
+        public List<Point> manips;
 
         public Wrappy(Point loc)
         {
@@ -115,11 +115,11 @@ namespace ICFP2019
     public partial class Status
     {
         public Map<Tile> map;
-        private Map<int> distMap;
-        private Wrappy wrappy;
-        private readonly List<KeyValuePair<Booster, Point>> boosters;
-        private List<Booster> collectedBoosters = new List<Booster>();
-        private List<PriGoal> prigoals;
+        public Map<int> distMap;
+        public Wrappy wrappy;
+        public readonly List<KeyValuePair<Booster, Point>> boosters;
+        public List<Booster> collectedBoosters = new List<Booster>();
+        public List<PriGoal> prigoals;
 
         public Status(Map<Tile> map, Point wrappyLoc, List<KeyValuePair<Booster, Point>> boosters)
         {

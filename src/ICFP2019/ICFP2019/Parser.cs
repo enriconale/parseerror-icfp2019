@@ -43,8 +43,14 @@ namespace ICFP2019
                     case "L":
                         bt = Booster.Drill;
                         break;
-                    case "X":
+                    case "R":
                         bt = Booster.Teleport;
+                        break;
+                    case "X":
+                        bt = Booster.CloningPlatform;
+                        break;
+                    case "C":
+                        bt = Booster.Cloning;
                         break;
                     default:
                         throw new Exception("Unidetified booster");
