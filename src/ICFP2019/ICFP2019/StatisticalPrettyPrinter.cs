@@ -39,6 +39,7 @@ namespace ICFP2019
                 System.Console.Out.WriteLine("Cloning raccolti    : " + currentStatus.collectedBoosters.FindAll(x => x == Booster.Cloning).Count);
             }
             // TODO stampa le posizioni dei wrappies
+            // TODO storico delle azioni se possibile
         }
     }
 }
