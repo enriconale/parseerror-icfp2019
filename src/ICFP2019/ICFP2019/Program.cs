@@ -22,7 +22,14 @@ namespace ICFP2019
             {
                 string problem = File.ReadAllText(args[0]);
                 Status status = Parser.parseProblem(problem);
-                StupidPrettyPrinter.printParsedMap(status.map);
+                if (args.Length >= 2 && File.Exists(args[1]))
+                {
+                    StupidPrettyPrinter.printParsedMap(status.map, args[1]);
+                }
+                else
+                {
+                    System.Console.Out.WriteLine("Fornisci (opzionale) un path per il file per il pretty printer");
+                }
             }
         }
     }
