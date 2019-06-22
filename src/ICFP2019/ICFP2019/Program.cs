@@ -24,7 +24,7 @@ namespace ICFP2019
                 Status status = Parser.parseProblem(problem);
                 if (args.Length >= 2 && File.Exists(args[1]))
                 {
-                    StupidPrettyPrinter.printParsedMap(status.map, args[1]);
+                    StupidPrettyPrinter.printParsedMap(status.map, status.boosters, args[1]);
                 }
                 else
                 {

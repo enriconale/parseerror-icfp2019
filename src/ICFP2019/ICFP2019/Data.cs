@@ -107,9 +107,9 @@ namespace ICFP2019
     public partial class Status
     {
         public Map<Tile> map;
-        private Wrappy wrappy;
-        private readonly List<KeyValuePair<Booster, Point>> boosters;
-        private List<Booster> collectedBoosters, activeBoosters;
+        public Wrappy wrappy;
+        public readonly List<KeyValuePair<Booster, Point>> boosters;
+        public List<Booster> collectedBoosters, activeBoosters;
 
         public Status(Map<Tile> map, Point wrappyLoc, List<KeyValuePair<Booster, Point>> boosters)
         {
