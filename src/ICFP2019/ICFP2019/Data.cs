@@ -113,7 +113,7 @@ namespace ICFP2019
 
     public partial class Status
     {
-        private Map<Tile> map;
+        public Map<Tile> map;
         private Wrappy wrappy;
         private readonly List<KeyValuePair<Booster, Point>> boosters;
         private List<Booster> collectedBoosters = new List<Booster>();
