@@ -25,7 +25,33 @@ namespace ICFP2019
         }
 
         private static List<KeyValuePair<Booster, Point>> parseBoosters(String boosters){
-            return null;//TODO
+            var bl = boosters.Split(';');
+            var result = new List<KeyValuePair<Booster, Point>>();
+            foreach (var b in bl)
+            {
+                var type = b.Substring(0, 1);
+                var pc = Regex.Match(b, @"(\d+,\d+)").Value;
+                Booster bt;
+                switch (type)
+                {
+                    case "B":
+                        bt = Booster.Manipulator;
+                        break;
+                    case "F":
+                        bt = Booster.FastWheels;
+                        break;
+                    case "L":
+                        bt = Booster.Drill;
+                        break;
+                    case "X":
+                        bt = Booster.Teleport;
+                        break;
+                    default:
+                        throw new Exception("Unidetified booster");
+                }
+                result.Add(new KeyValuePair<Booster, Point>(bt, new Point(pc)));
+            }
+            return result;
         }
 
         public static Map<Tile> parseMap(String map, List<String> obstacles) {
