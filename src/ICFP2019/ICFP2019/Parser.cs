@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ICFP2019
@@ -12,16 +13,45 @@ namespace ICFP2019
         private static List<Line> horizontalLines = new List<Line>();
 
         public static Status parseProblem(String problem) {
+            var le = problem.Split('#');
+            List<String> obst = new List<string>();
+            for (int i = 2; i < le.Length; i++)
+            {
+                if (le[i].StartsWith("(")) obst.Add(le[i]);
+            }
+            var map = Parser.parseMap(le[0], obst);
+            var status = new Status(map);
 
             throw new Exception();
         }
 
         public static Map<Tile> parseMap(String map, List<String> obstacles) {
-
-
+            var lines = parseLine(map);
+            foreach (var ls in obstacles.Select(x => { return parseLine(x); }))
+            {
+                lines.AddRange(ls);
+            }
+            
 
             throw new Exception();
         }
+
+        public static List<Line> parseLine(String ls) {
+            ls = ls.Substring(1, ls.Length - 2);
+            var lines = Regex.Split(ls, @"\),\(");
+            List<Line> result = new List<Line>();
+            var points = lines.ToList().Select<String,Vertex>(x => { return new Vertex(x); }).ToList<Vertex>();
+            for (int i = 0; i < points.Count; i++)
+            {
+                if (i == points.Count - 1 ) {
+                    result.Add(new Line(points[i], points[0]));
+                } else { 
+                    result.Add(new Line(points[i], points[i+1]));
+                }
+            }
+            return result;
+        }
+
 
 
     }
@@ -68,6 +98,11 @@ namespace ICFP2019
             this.s = s;
             this.e = e;
         }
+
+        public bool isVertical() {
+            return s.x == s.y;
+        }
+
 
         public bool intersect(Point p)
         {
