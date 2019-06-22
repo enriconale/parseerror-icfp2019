@@ -50,5 +50,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FSharpLib\FSharpLib.fsproj">
+      <Project>{c1a99233-06ce-40a4-914f-7ff9b5c10bd8}</Project>
+      <Name>FSharpLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

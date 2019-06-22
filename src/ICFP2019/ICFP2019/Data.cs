@@ -9,7 +9,8 @@ namespace ICFP2019
     {
         Empty = 0, Filled = 1, Obstacle = 2
     }
-
+    
+        
     public class Map<T> where T : struct
     {
         private T[,] a;
@@ -40,10 +41,14 @@ namespace ICFP2019
         public int H { get => h; set => h = value; }
     }
 
+    public class Robot
+    {
+    }
 
     public partial class Status
     {
         private Map<Tile> map;
+        private Robot robot;
 
         public Status(Map<Tile> map)
         {
