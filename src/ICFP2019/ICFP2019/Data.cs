@@ -1,6 +1,6 @@
 ﻿
 using System;
-
+using System.Collections.Generic;
 
 namespace ICFP2019
 {
@@ -41,18 +41,50 @@ namespace ICFP2019
         public int H { get => h; set => h = value; }
     }
 
-    public class Robot
+    public enum Dir
     {
+        N = 0, E = 1, S = 2, W = 3
+    }
+
+    public class Wrappy
+    {
+        private Point loc;
+        private Dir dir;
+        private List<Point> manips;
+
+        public Wrappy(Point loc)
+        {
+            this.Loc = loc;
+            Dir = Dir.E;
+            Manips = new List<Point> { new Point(1, 1), new Point(1, 0), new Point(1, -1) };
+        }
+
+        public Point Loc { get => loc; set => loc = value; }
+        public Dir Dir { get => dir; set => dir = value; }
+        public List<Point> Manips { get => manips; set => manips = value; }
+
+        public void rotateClockwise()
+        {
+            dir = (Dir) (((int) dir + 1) % 4);
+        }
+
+        public void rotateAntiClockwise()
+        {
+            dir = (Dir)(((int) dir + 3) % 4);
+        }
+
+         
     }
 
     public partial class Status
     {
         private Map<Tile> map;
-        private Robot robot;
+        private Wrappy wrappy;
 
-        public Status(Map<Tile> map)
+        public Status(Map<Tile> map, Point wrappyLoc)
         {
             this.map = map;
+            this.wrappy = new Wrappy(wrappyLoc);
         }
 
         public Map<Tile> Map { get => map; set => map = value; }

@@ -56,10 +56,16 @@ namespace ICFP2019
 
     }
 
-    class Point
+    public class Point
     {
         public int x;
         public int y;
+
+        public Point(int x, int y)
+        {
+            this.x = x;
+            this.y = y;
+        }
 
         public Point(String coords) {
             var cs = coords.Split(',');
@@ -80,9 +86,15 @@ namespace ICFP2019
         {
             return x == other.x || y == other.y;
         }
+
+        public static Point operator+(Point p1, Point p2)
+        {
+            return new Point(p1.x + p2.x, p1.y + p2.y);
+        }
+
     }
 
-    class Vertex : Point
+    public class Vertex : Point
     {
         public Vertex(string coords) : base(coords)
         {
