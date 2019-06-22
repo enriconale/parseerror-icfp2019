@@ -58,6 +58,11 @@ namespace ICFP2019
         N = 0, E = 1, S = 2, W = 3
     }
 
+    public enum Booster
+    {
+        Manipulator, FastWheels, Teleport, Drill
+    }
+
     public class Wrappy
     {
         private Point loc;
@@ -103,11 +108,14 @@ namespace ICFP2019
     {
         private Map<Tile> map;
         private Wrappy wrappy;
+        private readonly List<KeyValuePair<Booster, Point>> boosters;
+        private List<Booster> collectedBoosters, activeBoosters;
 
-        public Status(Map<Tile> map, Point wrappyLoc)
+        public Status(Map<Tile> map, Point wrappyLoc, List<KeyValuePair<Booster, Point>> boosters)
         {
             this.map = map;
             this.wrappy = new Wrappy(wrappyLoc);
+            this.boosters = boosters;
         }
 
         public Map<Tile> Map { get => map; set => map = value; }

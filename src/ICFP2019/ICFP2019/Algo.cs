@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace ICFP2019
 {
 
@@ -22,11 +24,21 @@ namespace ICFP2019
             }
             // TODO: gestire F, L e gli altri booster
 
+            updateStatus();
+        }
+
+        public void updateStatus()
+        {
             updateMap();
+            // collezione il booster se wrappy ci sta sopra
+            int i = boosters.FindIndex((kvp) => kvp.Value == wrappy.Loc);
+            if (i >= 0) collectedBoosters.Add(boosters[i].Key);
+
         }
 
         public void updateMap()
         {
+            map[wrappy.Loc] = Tile.Filled;
             foreach (Point p in wrappy.Manips)
             {
                 map[wrappy.absolutePosition(p)] = Tile.Filled;
