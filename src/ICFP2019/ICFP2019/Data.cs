@@ -70,6 +70,7 @@ namespace ICFP2019
         public Point loc;
         public Dir dir;
         public List<Point> manips;
+        private Map<int> distMap;
 
         public Wrappy(Point loc)
         {
@@ -104,6 +105,18 @@ namespace ICFP2019
             }
             return new Point(x, y);
         }
+
+        public void updateDistMap(Map<Tile> map)
+        {
+            Graph graph = new Graph(map);
+            distMap = graph.CalculateMap(Loc);
+        }
+
+        public int DistTo(int x, int y)
+        {
+            return distMap[x, y];
+        }
+
     }
 
     public struct PriGoal
@@ -115,7 +128,6 @@ namespace ICFP2019
     public partial class Status
     {
         public Map<Tile> map;
-        public Map<int> distMap;
         public Wrappy wrappy;
         public readonly List<KeyValuePair<Booster, Point>> boosters;
         public List<Booster> collectedBoosters = new List<Booster>();
@@ -131,16 +143,6 @@ namespace ICFP2019
 
         public Map<Tile> Map { get => map; set => map = value; }
 
-        internal void updateDistMap()
-        {
-            Graph graph = new Graph(map);
-            distMap = graph.CalculateMap(wrappy.Loc);
-        }
-
-        public int DistTo(int x, int y)
-        {
-            return distMap[x, y];
-        }
     }
 
 }
