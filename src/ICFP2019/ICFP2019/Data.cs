@@ -5,12 +5,12 @@ using System;
 namespace ICFP2019
 {
 
-    enum Tile
+    public enum Tile
     {
         Empty = 0, Filled = 1, Obstacle = 2
     }
 
-    class Map<T> where T : struct
+    public class Map<T> where T : struct
     {
         private T[,] a;
         private int w, h;
@@ -41,7 +41,7 @@ namespace ICFP2019
     }
 
 
-    class Status
+    public partial class Status
     {
         private Map<Tile> map;
 
