@@ -60,7 +60,7 @@ namespace ICFP2019
 
     public enum Booster
     {
-        Manipulator, FastWheels, Teleport, Drill
+        Manipulator, FastWheels, Teleport, Drill, Cloning, CloningPlatform
     }
 
     public class Wrappy
