@@ -10,6 +10,7 @@ namespace ICFP2019
         Empty = 0, Filled = 1, Obstacle = 2
     }
     
+
         
     public class Map<T> where T : struct
     {
@@ -104,18 +105,26 @@ namespace ICFP2019
         }
     }
 
+    public struct PriGoal
+    {
+        public Goal goal;
+        public int pri;
+    }
+
     public partial class Status
     {
         private Map<Tile> map;
         private Wrappy wrappy;
         private readonly List<KeyValuePair<Booster, Point>> boosters;
-        private List<Booster> collectedBoosters, activeBoosters;
+        private List<Booster> collectedBoosters = new List<Booster>();
+        private List<PriGoal> prigoals;
 
         public Status(Map<Tile> map, Point wrappyLoc, List<KeyValuePair<Booster, Point>> boosters)
         {
             this.map = map;
             this.wrappy = new Wrappy(wrappyLoc);
             this.boosters = boosters;
+            // TODO: calculare i corner della mappa qui o ce li facciamo passare in construzione?
         }
 
         public Map<Tile> Map { get => map; set => map = value; }
