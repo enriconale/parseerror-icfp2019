@@ -89,7 +89,7 @@ namespace ICFP2019
 
         public bool isNotEmpty(int x, int y, T empty)
         {
-            return this[x, y].Equals(empty);
+            return !this[x, y].Equals(empty);
         }
     }
 }
