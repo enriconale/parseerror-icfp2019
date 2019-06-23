@@ -33,28 +33,30 @@ namespace ICFP2019.Properties
 
             Point p = new Point();
 
-            // cycle through all L-1 norm radii
+            // cycle through all radii
             for (int r = 1; r < Math.Max(map.W, map.H); ++r)
             {
                 // cycle through rhombus (i.e. L-1 circle) side length, coordinates
-                // are computed as (i, r-i), depends on which side
+                // are computed as (i, r-i), depends on which side (have l-1 distance
+                // = r from wrappy position)
                 for (int i = 0; i < r; ++i)
                 {
-                    // compute offset for each side, sign of x/y offset 
-                    // based on side is:
+                    // compute offset for each side, sign of
+                    // x/y offset based on side is:
                     //
-                    //      1     @     0
-                    //     -/+  @   @  +/+
-                    //        @       @
-                    //      @     X     @
-                    //        @       @
-                    //     -/-  @   @  -/+
-                    //      2     @     3
+                    //         1     @     0
+                    //        -/+  @   @  +/+
+                    //           @       @
+                    //         @     X     @
+                    //           @       @
+                    //        -/-  @   @  +/-
+                    //         2     @     3
                     //
                     for (int side = 0; side < 4; ++side)
                     {
-                        int xSign = (side < 2) ? 1 : -1;
-                        int ySign = side % 2;
+                        // trick: 0 = 3 (mod 3)
+                        int xSign = (side % 3 == 0) ? 1 : -1;
+                        int ySign = (side < 2) ? 1 : -1;
                         p.x = w.Loc.x + i * xSign;
                         p.y = w.Loc.y + (r - i) * ySign;
                         if (map.validCoordinate(p) && map[p] != Tile.Obstacle)
