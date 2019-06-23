@@ -112,7 +112,7 @@ namespace ICFP2019
 
         public static Point parsePoint(String p)
         {
-            return new Point(Regex.Match(p, @"(\d+,\d+)").Value);
+            return new Point(Regex.Match(p, @"(\-?\d+,\-?\d+)").Value);
         }
 
         public static Map<Tile> parseMap(String map, List<String> obstacles)
