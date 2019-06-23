@@ -32,17 +32,32 @@ namespace ICFP2019
             if (File.Exists(problemPath + problemExtension))
             {
                 string problem = File.ReadAllText(problemPath + problemExtension);
-                string[] tempSolutions = null;
+                List<List<Action>> tempSolutions = new List<List<Action>>();
                 if (File.Exists(problemPath + problemTempSolutions))
                 {
-                    tempSolutions = File.ReadAllLines(problemPath + problemTempSolutions);
+                    string tmpSolutionString = File.ReadLines(problemPath + problemTempSolutions).First();
+                    List<Action> currentActions = new List<Action>();
+                    foreach (var action in tmpSolutionString)
+                    {
+                        string strAction = action.ToString();
+                        if ("#".Equals(strAction))
+                        {
+                            tempSolutions.Add(currentActions);
+                            currentActions = new List<Action>();
+                        }
+                        else
+                        {
+                            currentActions.Add(Parser.parseAction(strAction));
+                        }
+                    }
                 }
                 Status status = Parser.parseProblem(problem);
                 if (!"".Equals(StupidPrinterOutputPath))
                 {
                     StupidPrettyPrinter.printParsedMap(status.map, status.boosters, StupidPrinterOutputPath);
                 }
-                Solver solver = new Solver(status);
+                Solver solver = new Solver(status, tempSolutions);
+                solver.Init();
                 //solver.solve();
                 printSolution(problemPath, problemSolution, solver);
             }
@@ -75,9 +90,14 @@ namespace ICFP2019
             System.IO.StreamWriter file =
                 new System.IO.StreamWriter(problemPath + problemSolution, false);
             List<List<Action>> solution = solver.solution;
-            foreach (var sol in solution)
+            foreach (List<Action> sol in solution)
             {
-                file.Write("X");
+                foreach (Action action in sol)
+                {
+                    //TODO write correct actions
+                    file.Write("$");
+                }
+                file.Write("#");
             }
             file.Close();
         }
