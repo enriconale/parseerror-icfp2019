@@ -93,7 +93,7 @@ namespace ICFP2019
 
         private List<Point> ShortestPath(Point dst)
         {
-            Console.WriteLine("dst = " + dst);
+            //Console.WriteLine("dst = " + dst);
             List<Point> r = new List<Point>();
             r.Add(dst);
             Point p;

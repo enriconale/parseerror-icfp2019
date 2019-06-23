@@ -19,26 +19,34 @@ namespace ICFP2019
                 for (int j = 0; j < parsedMap.W; j++)
                 {
                     string s = ".";
-                    switch (parsedMap[j, i])
+                    if (wrappy.Loc.x == j && wrappy.Loc.y == i)
                     {
-                        case Tile.Empty:
-                            s = wrappy.DistMap[j, i].ToString();
-                            break;
-                        //if (wrappy.Loc.x == j && wrappy.Loc.y == i)
-                        //{
-                        //    tileText = "●";
-                        //}
-                        case Tile.Filled:
-                            s = "@";
-                            break;
-                        case Tile.Obstacle:
-                            s = "█";
-                            break;
+                        s = "?";
+                    }
+                    else
+                    {
+                        switch (parsedMap[j, i])
+                        {
+                            case Tile.Empty:
+                                int x = wrappy.DistMap[j, i];
+                                if (x < 10) s = x.ToString();
+                                else if (x == int.MaxValue) s = "I";
+                                else s = "G";
+                                break;
+                            case Tile.Filled:
+                                s = "@";
+                                break;
+                            case Tile.Obstacle:
+                                s = "█";
+                                break;
+                        }
                     }
                     System.Console.Out.Write(s);
                 }
                 System.Console.Out.WriteLine("");
             }
+            foreach (var a in wrappy.ActionHistory)
+                System.Console.Out.Write(a);
             System.Console.Out.WriteLine("");
         }
 
