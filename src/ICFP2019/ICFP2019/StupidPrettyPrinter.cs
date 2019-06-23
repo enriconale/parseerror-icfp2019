@@ -37,6 +37,10 @@ namespace ICFP2019
                         }
                         file.Write(tileText);
                     }
+                    else if (parsedMap[j, i] == Tile.Filled)
+                    {
+                        file.Write("F");
+                    }
                     else
                     {
                         file.Write("█");
@@ -45,6 +49,34 @@ namespace ICFP2019
                 file.WriteLine("");
             }
             file.Close();
+        }
+        
+        public static void PrintCurrentSemiFilledMap(Status currentStatus)
+        {
+            Dictionary<int, Dictionary<int, string>> mappedBoosters = new Dictionary<int, Dictionary<int, string>>();
+            Map<Tile> parsedMap = currentStatus.map;
+            System.Console.Out.WriteLine("====================================================================================================");
+
+            for (int i = parsedMap.H - 1; i >= 0; i--)
+            {
+                for (int j = 0; j < parsedMap.W; j++)
+                {
+                    if (parsedMap[j, i] == Tile.Empty)
+                    {
+                        string tileText = " ";
+                        System.Console.Out.Write(tileText);
+                    }
+                    else if (parsedMap[j, i] == Tile.Filled)
+                    {
+                        System.Console.Out.Write("+");
+                    }
+                    else
+                    {
+                        System.Console.Out.Write("█");
+                    }
+                }
+                System.Console.Out.WriteLine("");
+            }
         }
 
         private static string getMappedStringValue(Booster booster)

@@ -27,16 +27,16 @@ namespace ICFP2019
                 }
             }
             int totalTiles = currentFilledTiles + currentEmptyTiles;
-            int percentFilled = currentFilledTiles / totalTiles * 100;
+            double percentFilled = Math.Round((float)currentFilledTiles / totalTiles * 100);
             System.Console.Out.WriteLine("====================================================================================================");
             System.Console.Out.WriteLine("Totale tiles        : " + totalTiles + " di cui " + currentFilledTiles + " riempite (" + percentFilled + "%)");
             if (currentStatus.collectedBoosters != null)
             {
                 System.Console.Out.WriteLine("Drill raccolti      : " + currentStatus.collectedBoosters.FindAll(x => { return x == Booster.Drill; }).Count);
-                System.Console.Out.WriteLine("Manipulator raccolti: " + currentStatus.collectedBoosters.FindAll(x => x == Booster.Manipulator).Count);
-                System.Console.Out.WriteLine("FastWheels raccolti : " + currentStatus.collectedBoosters.FindAll(x => x == Booster.FastWheels).Count);
-                System.Console.Out.WriteLine("Teleport raccolti   : " + currentStatus.collectedBoosters.FindAll(x => x == Booster.Teleport).Count);
-                System.Console.Out.WriteLine("Cloning raccolti    : " + currentStatus.collectedBoosters.FindAll(x => x == Booster.Cloning).Count);
+                System.Console.Out.WriteLine("Manipulator raccolti: " + currentStatus.collectedBoosters.FindAll(x => { return x == Booster.Manipulator; }).Count);
+                System.Console.Out.WriteLine("FastWheels raccolti : " + currentStatus.collectedBoosters.FindAll(x => { return x == Booster.FastWheels; }).Count);
+                System.Console.Out.WriteLine("Teleport raccolti   : " + currentStatus.collectedBoosters.FindAll(x => { return x == Booster.Teleport; }).Count);
+                System.Console.Out.WriteLine("Cloning raccolti    : " + currentStatus.collectedBoosters.FindAll(x => { return x == Booster.Cloning; }).Count);
             }
             // TODO stampa le posizioni dei wrappies
             // TODO storico delle azioni se possibile
