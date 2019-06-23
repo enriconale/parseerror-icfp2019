@@ -15,9 +15,27 @@ namespace ICFP2019
             this.map = map;
             this.wrappies = new List<Wrappy> { new Wrappy(wrappyLoc) };
             this.boosters = boosters;
-            // TODO: calculare i corner della mappa qui o ce li facciamo passare in construzione?
+            calculateGoals();
         }
 
         public Map<Tile> Map { get => map; set => map = value; }
+
+        public void CalculateGoals()
+        {
+            goals = new List<Goal>();
+            foreach (var b in boosters)
+            {
+                goals.Add(Goal.NewGoTo(b.Value.x, b.Value.y));
+            }
+
+            for (int y = 0; y < map.H; ++y)
+            {
+                for (int x = 0; x < map.W; ++x)
+                {
+                    if (map.isCorner(new Point(x, y), Tile.Empty))
+                        goals.Add(Goal.NewGoTo(x, y));
+                }
+            }
+        }
     }
 }

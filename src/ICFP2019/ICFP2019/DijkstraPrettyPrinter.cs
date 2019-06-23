@@ -6,13 +6,15 @@ namespace ICFP2019
 {
     public class DijkstraPrettyPrinter
     {
-        public static void printDijkstraMap(Status status, Wrappy wrappy, string printerPath)
+        public static void printDijkstraMap(Status status, Wrappy wrappy)
         {
-            System.IO.StreamWriter file =
-                new System.IO.StreamWriter(printerPath, false);
-            file.WriteLine("================ Distance map for wrappy at position (" + wrappy.Loc.x + ", " + wrappy.Loc.y + ") ================");
-            file.WriteLine("================ Wrappy is identified by a ● on the map ================");
+            System.Console.Out.WriteLine("================ Distance map for wrappy at position (" + wrappy.Loc.x + ", " + wrappy.Loc.y + ") ================");
             Map<Tile> parsedMap = status.Map;
+            if (wrappy.DistMap == null)
+            {
+                System.Console.Out.WriteLine("================ Could not print dijkstra map ================");
+                return;
+            }
             for (int i = parsedMap.H - 1; i >= 0; i--)
             {
                 for (int j = 0; j < parsedMap.W; j++)
@@ -25,16 +27,15 @@ namespace ICFP2019
                             tileText = "●";
                         }
                         
-                        file.Write(tileText);
+                        System.Console.Out.Write(tileText);
                     }
                     else
                     {
-                        file.Write("█");
+                        System.Console.Out.Write("█");
                     }
                 }
-                file.WriteLine("");
+                System.Console.Out.WriteLine("");
             }
-            file.Close();
         }
     }
 }

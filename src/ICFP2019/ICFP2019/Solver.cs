@@ -12,10 +12,9 @@ namespace ICFP2019
         private List<List<Action>> wrappiesStartingActions;// TODO ... not used
         public List<List<Action>> solution;
 
-        public Solver(Status status0)
+        public Solver(Status status0) : this(status0, new List<List<Action>>())
         {
-            this.status = status0;
-            this.solution = new List<List<Action>>();
+
         }
 
         public Solver(Status status0, List<List<Action>> wrappiesStartingActions)
@@ -23,10 +22,7 @@ namespace ICFP2019
             this.status = status0;
             this.wrappiesStartingActions = wrappiesStartingActions;
             this.solution = new List<List<Action>>();
-        }
 
-        public void Init()
-        {
             for (int i = 0; i < wrappiesStartingActions.Count; i++)
             {
                 var wacs = wrappiesStartingActions[i];
@@ -35,6 +31,11 @@ namespace ICFP2019
                     if (status.wrappies.Count <= i) throw new Exception("Malformed starting action: Using a not spawned wrappy");
                     status.execute(wac, status.wrappies[i]);
                 }
+            }
+            StatisticalPrettyPrinter.printStats(status);
+            foreach (Wrappy wrappy in status.wrappies)
+            {
+                DijkstraPrettyPrinter.printDijkstraMap(status, wrappy);
             }
         }
 
@@ -69,6 +70,9 @@ namespace ICFP2019
                         if (d.y == w.Loc.y + 1 && d.x == w.Loc.x) a = Action.W;
                     }
                     status.execute(a, w);
+                    status.CalculateGoals();
+                    StatisticalPrettyPrinter.printStats(status);
+                    DijkstraPrettyPrinter.printDijkstraMap(status, w);
                 }
             }
         }

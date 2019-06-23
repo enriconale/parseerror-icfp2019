@@ -52,7 +52,12 @@ namespace ICFP2019
 
         public bool validCoordinate(Point p)
         {
-            return (p.x >= 0 && p.x < W && p.y >= 0 && p.y < h);
+            return validCoordinate(p.x, p.y);
+        }
+
+        public bool validCoordinate(int x, int y)
+        {
+            return (x >= 0 && x < W && y >= 0 && y < h);
         }
 
         public bool isCorner(Point p, T empty) {
@@ -61,10 +66,10 @@ namespace ICFP2019
 
         public bool isCorner(int x, int y, T empty) {
             return
-                isNotEmpty(x - 1, y, empty) && isNotEmpty(x, y + 1, empty) ||
-                isNotEmpty(x + 1, y, empty) && isNotEmpty(x, y + 1, empty) ||
-                isNotEmpty(x, y - 1, empty) && isNotEmpty(x + 1, y, empty) ||
-                isNotEmpty(x, y - 1, empty) && isNotEmpty(x - 1, y, empty)
+                ((!validCoordinate(x - 1, y) || isNotEmpty(x - 1, y, empty)) ||
+                 (!validCoordinate(x + 1, y) || isNotEmpty(x + 1, y, empty))) &&
+                ((!validCoordinate(x, y - 1) || isNotEmpty(x, y - 1, empty)) ||
+                 (!validCoordinate(x, y + 1) || isNotEmpty(x, y + 1, empty)))
                 ;
         }
 
@@ -75,7 +80,7 @@ namespace ICFP2019
 
         private int countNotEmpty(int x, int y, T empty)
         {
-            return (this[x, y].Equals(empty)) ? 0 : 1;
+            return isNotEmpty(x, y, empty) ? 0 : 1;
         }
 
         public bool isNotEmpty(Point p, T empty) {

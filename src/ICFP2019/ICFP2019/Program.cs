@@ -42,9 +42,8 @@ namespace ICFP2019
                 }
 
                 Solver solver = new Solver(status, tempSolutions);
-                solver.Init();
-                //solver.solve();
-                //PrintSolution(problemPath, problemSolution, solver);
+                solver.Loop();
+                PrintSolution(problemPath, problemSolution, solver);
             }
         }
 
