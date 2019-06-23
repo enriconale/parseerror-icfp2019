@@ -27,9 +27,11 @@ namespace ICFP2019.ShortestTileAlgo
         public Dijkstra.Graph.Result calculateMap(Wrappy w, List<Goal> goals)
         {
             Map<int> distMap = new Map<int>(map.W, map.H);
+            Map<bool> visited = new Map<bool>(map.W, map.H);
             int max_goals = Math.Min(MAX_GOALS, goals.Count);
 
             distMap.fillWith(UNREACHABLE);
+            visited.fillWith(false);
             distMap[w.Loc] = 0;
             // sort goals by distance from w and then only keep the first max_goals
             goals.Sort((Goal g1, Goal g2) =>
@@ -72,6 +74,7 @@ namespace ICFP2019.ShortestTileAlgo
                         {
                             distMap[p] = minDistAround(distMap, p) + 1;
                         }
+                        visited[p] = true;
                     }
                 }
             }
