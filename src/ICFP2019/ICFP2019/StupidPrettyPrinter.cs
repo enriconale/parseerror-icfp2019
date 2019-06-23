@@ -61,6 +61,10 @@ namespace ICFP2019
             {
                 for (int j = 0; j < parsedMap.W; j++)
                 {
+                    if (currentStatus.wrappies[0].Loc.x == j && currentStatus.wrappies[0].Loc.y == i) {
+                        System.Console.Out.Write(currentStatus.wrappies[0].Dir);
+                        continue;
+                    }
                     if (parsedMap[j, i] == Tile.Empty)
                     {
                         string tileText = " ";

@@ -30,18 +30,20 @@ namespace ICFP2019
                 {
                     if (status.wrappies.Count <= i) throw new Exception("Malformed starting action: Using a not spawned wrappy");
                     status.execute(wac, status.wrappies[i]);
+                    StupidPrettyPrinter.PrintCurrentSemiFilledMap(status);
                 }
             }
+            StatisticalPrettyPrinter.printStats(status);
         }
 
         public void Loop()
         {
             while (!status.isSolved())
             {
-                StatisticalPrettyPrinter.printStats(status);
+                //StatisticalPrettyPrinter.printStats(status);
                 foreach (var w in status.wrappies)
                 {
-                    DijkstraPrettyPrinter.printDijkstraMap(status.Map, w);
+                    //DijkstraPrettyPrinter.printDijkstraMap(status.Map, w);
                     Action a = null;
                     if (w.LastAction != Action.C)
                     {
@@ -59,6 +61,7 @@ namespace ICFP2019
                     if (a == null)
                     {
                         w.updateDistMap(status.map, status.goals);
+                        //DijkstraPrettyPrinter.printDijkstraMap(status.Map, w);
                         Wrappy.PriPath pp = w.BestShortestPath();
                         Point d = pp.path[0];
                         if (d.x == w.Loc.x - 1 && d.y == w.Loc.y) a = Action.A;

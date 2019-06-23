@@ -43,7 +43,7 @@ namespace ICFP2019
 
         public void rotateClockwise()
         {
-            //dir = (Dir)(((int)dir + 1) % 4);
+            dir = (Dir)(((int)dir + 1) % 4);
             var nm = new List<Point>();
             foreach (var m in this.manips)
             {
@@ -54,7 +54,7 @@ namespace ICFP2019
 
         public void rotateAntiClockwise()
         {
-            //dir = (Dir)(((int)dir + 3) % 4);
+            dir = (Dir)(((int)dir + 3) % 4);
             var nm = new List<Point>();
             foreach (var m in this.manips)
             {
