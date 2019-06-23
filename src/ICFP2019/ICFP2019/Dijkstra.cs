@@ -6,19 +6,19 @@ namespace ICFP2019.Dijkstra
 
     public class Edge
     {
-        public short V2, Length;
+        public int V2, Length;
 
     }
 
     public class Vertex
     {
-        public short Id;
+        public int Id;
         public List<Edge> OutgoingEdges;
     }
 
     public class Graph
     {
-        public static readonly int UNREACHABLE = Int32.MaxValue;
+        public static readonly int UNREACHABLE = int.MaxValue;
         public static readonly int MAX_GOALS = 10;
         private List<Vertex> vertices = new List<Vertex>();
         private Map<Tile> map;
@@ -29,9 +29,9 @@ namespace ICFP2019.Dijkstra
             populate();
         }
 
-        internal short idAt(int x, int y)
+        internal int idAt(int x, int y)
         {
-            return (short)(x + y * map.W);
+            return x + y * map.W;
         }
 
         internal Edge edgeAt(int x, int y)
@@ -39,14 +39,14 @@ namespace ICFP2019.Dijkstra
             return new Edge
             {
                 V2 = idAt(x, y),
-                Length = (short)(map[x, y] == Tile.Obstacle ? UNREACHABLE : 1)
+                Length = map[x, y] == Tile.Obstacle ? UNREACHABLE : 1
             };
         }
 
         public void populate()
         {
-            for (short x = 0; x < map.W; ++x)
-                for (short y = 0; y < map.H; ++y)
+            for (int y = 0; y < map.H; ++y)
+                for (int x = 0; x < map.W; ++x)
                 {
                     Vertex v = new Vertex
                     {
@@ -85,9 +85,9 @@ namespace ICFP2019.Dijkstra
         private Result CalculateMap(Vertex v, Wrappy w, List<Goal> goals)
         {
             List<PriGoal> priGoals = new List<PriGoal>();
-            Map<int> distMap = new Map<int>(map.W, map.H);
-            //int min = short.MaxValue;
-            var crossingEdges = new MinHeap<short, short>(N);
+            Map<int> distMap = new Map<int>(map.W, map.H, UNREACHABLE);
+            //int min = int.MaxValue;
+            var crossingEdges = new MinHeap<int, int>(N);
             var minVertices = new bool[N];
             minVertices[v.Id] = true;
             int max_goals = Math.Min(MAX_GOALS, goals.Count);
@@ -100,9 +100,10 @@ namespace ICFP2019.Dijkstra
 
             while (crossingEdges.Count > 0)
             {
+                //DijkstraPrettyPrinter.printDijkstraMap(distMap, w);
                 var minEdge = crossingEdges.ExtractMin();
 
-                short v2 = minEdge.Key;
+                int v2 = minEdge.Key;
                 var newVertex = vertices[v2];
                 int X = v2 % map.W, Y = v2 / map.W;
                 distMap[X, Y] = minEdge.Value;
@@ -133,10 +134,10 @@ namespace ICFP2019.Dijkstra
 
                 foreach (var newEdge in newVertex.OutgoingEdges)
                 {
-                    if (minVertices[newEdge.V2])
+                    if (minVertices[newEdge.V2] || newEdge.Length == UNREACHABLE)
                         continue;
 
-                    var edgeLength = (short)(newEdge.Length + minEdge.Value);
+                    var edgeLength = newEdge.Length + minEdge.Value;
 
                     var edge = crossingEdges.Find(newEdge.V2);
                     if (edge != null)

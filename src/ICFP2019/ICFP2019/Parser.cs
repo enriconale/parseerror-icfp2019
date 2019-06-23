@@ -122,7 +122,7 @@ namespace ICFP2019
             {
                 parseLine(ob);
             }
-            var result = new Map<Tile>(maxX, maxY);
+            var result = new Map<Tile>(maxX, maxY, Tile.Empty);
             for (int x = 0; x < maxX; x++)
             {
                 for (int y = 0; y < maxY; y++)

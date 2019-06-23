@@ -57,7 +57,6 @@
     <Compile Include="Status.cs" />
     <Compile Include="StupidPrettyPrinter.cs" />
     <Compile Include="Wrappy.cs" />
-    <Compile Include="Properties\ShortestTileAlgo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

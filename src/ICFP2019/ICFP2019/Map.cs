@@ -7,12 +7,12 @@ namespace ICFP2019
         private T[,] a;
         private int w, h;
 
-        public Map(int w, int h)
+        public Map(int w, int h, T x)
         {
             this.W = w;
             this.H = h;
             a = new T[w, h];
-            Array.Clear(a, 0, w * h);
+            this.fillWith(x);
         }
 
         public T this[Point p]
