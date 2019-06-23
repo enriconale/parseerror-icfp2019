@@ -126,12 +126,12 @@ namespace ICFP2019
         public static double FindDistanceToSegment(
                 Point ppt, Point pp1, Point pp2)
         {
-            Tuple<float, float> pt = new Tuple<float, float>(ppt.x + 0.5f, ppt.y + 0.5f);
-            Tuple< float, float> p1 =  new Tuple<float, float>(pp1.x + 0.5f, pp1.y + 0.5f);
-            Tuple<float, float> p2 = new Tuple<float, float>(pp2.x + 0.5f, pp2.y + 0.5f);
-            Tuple<float, float> closest = new Tuple<float, float>( 0f , 0f );
-            float dx = p2.Item1 - p1.Item1;
-            float dy = p2.Item2 - p1.Item2;
+            Tuple<double, double> pt = new Tuple<double, double>(ppt.x + 0.5, ppt.y + 0.5);
+            Tuple<double, double> p1 =  new Tuple<double, double>(pp1.x + 0.5, pp1.y + 0.5);
+            Tuple<double, double> p2 = new Tuple<double, double>(pp2.x + 0.5, pp2.y + 0.5);
+            Tuple<double, double> closest = new Tuple<double, double>( 0 , 0 );
+            double dx = p2.Item1 - p1.Item1;
+            double dy = p2.Item2 - p1.Item2;
             if ((dx == 0) && (dy == 0))
             {
                 // It's a point not a line segment.
@@ -141,7 +141,7 @@ namespace ICFP2019
             }
 
             // Calculate the t that minimizes the distance.
-            float t = ((pt.Item1 - p1.Item1) * dx + (pt.Item2 - p1.Item2) * dy) /
+            double t = ((pt.Item1 - p1.Item1) * dx + (pt.Item2 - p1.Item2) * dy) /
                 (dx * dx + dy * dy);
 
             // See if this represents one of the segment's
@@ -158,7 +158,7 @@ namespace ICFP2019
             }
             else
             {
-                closest = new Tuple<float, float>(p1.Item1 + t * dx, p1.Item2 + t * dy);
+                closest = new Tuple<double, double>(p1.Item1 + t * dx, p1.Item2 + t * dy);
                 dx = pt.Item1 - closest.Item1;
                 dy = pt.Item2 - closest.Item2;
             }
