@@ -32,22 +32,24 @@ namespace ICFP2019
         /**
          * return if solved
          */
-        public bool solve() {
+        public bool solve()
+        {
             while (!s.isSolved())
             {
-                if (s.prigoals.Count == 0) {
-                    return false;
-                }
+                //if (s.prigoals.Count == 0)
+                //{
+                //    return false;
+                //}
                 this.solveStep();
             }
             return true;
-        } 
+        }
 
         public void solveStep()
         {
             foreach (var w in s.wrappies)
             {
-                w.updateDistMap(s.Map);
+                //w.updateDistMap(s.Map);
             }
             foreach (var w in s.wrappies)
             {

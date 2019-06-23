@@ -25,6 +25,7 @@ namespace ICFP2019
 
             if (a.IsB)
             {
+                if (!collectedBoosters.Remove(Booster.Manipulator)) throw new Exception("Missing manipulator boost");
                 Action.B b = (Action.B)a;
                 w.Manips.Add(new Point(b.Item1, b.Item2));
                 // TODO: checkare che il punto sia davvero adiacente
@@ -32,17 +33,26 @@ namespace ICFP2019
             // TODO: gestire F, L e gli altri booster
             if (a.IsF)
             {
-                //Attach fastwheels
+                if (!collectedBoosters.Remove(Booster.FastWheels)) throw new Exception("Missing fast whill boost");
                 w.remainingFastWheel = 50;
             }
             if (a.IsL)
             {
-                //Attach drill
+                if (!collectedBoosters.Remove(Booster.Drill)) throw new Exception("Missing Drill boost");
                 w.remainingDrill = 30;
+
             }
-            
-
-
+            if (a.IsR)//telepor
+            {
+                throw new Exception("Telport not implemented yet");
+            }
+            if (a.IsC)
+            {
+                if (!collectedBoosters.Remove(Booster.Cloning)) throw new Exception("Missing Cloning boost");
+                if (boosters.Find((kvp) => kvp.Value == w.Loc).Key != Booster.CloningPlatform) throw new Exception("Cloning not in a platform");
+                wrappies.Add(new Wrappy(w.Loc));
+                
+            }
             w.executeds.Add(a);
             updateStatus(w);
         }
@@ -60,7 +70,11 @@ namespace ICFP2019
             updateMap(w);
             // colleziona il booster se wrappy ci sta sopra
             int i = boosters.FindIndex((kvp) => kvp.Value == w.Loc);
-            if (i >= 0) collectedBoosters.Add(boosters[i].Key);
+            if (i >= 0) {
+                var b = boosters[i];
+                collectedBoosters.Add(b.Key);
+                if(!(b.Key == Booster.CloningPlatform)) boosters.RemoveAt(i);
+            }
             // TODO: usare subito i booster semplici: fastwheel e manip
         }
 

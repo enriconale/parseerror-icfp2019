@@ -53,6 +53,7 @@
     <Compile Include="Solver.cs" />
     <Compile Include="StatisticalPrettyPrinter.cs" />
     <Compile Include="StupidPrettyPrinter.cs" />
+    <Compile Include="Wrappy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

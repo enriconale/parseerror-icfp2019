@@ -145,10 +145,7 @@ namespace ICFP2019
     public struct PriGoal
     {
         public Goal goal;
-        //public Dictionary<Wrappy, int> wrappyPriority;
-        //public int pri;
-        public int distance;
-        public Wrappy aw;
+        public int pri;
     }
 
     public partial class Status
