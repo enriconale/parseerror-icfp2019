@@ -1,4 +1,5 @@
 ﻿using System;
+using 
 
 namespace ICFP2019
 {
@@ -121,6 +122,34 @@ namespace ICFP2019
             if (a.IsD) m = new Point(1, 0);
             if (a.IsS) m = new Point(0, -1);
             return m;
+        }
+
+
+        public static bool FindIntersection(Point pp1, Point pp2, Point qq1, Point qq2, out Point S)
+        {
+            Tuple<double, double> p1 = new Tuple<double, double>(pp1.x + 0.5, pp1.y + 0.5),
+                p2 = new Tuple<double, double>(pp2.x + 0.5, pp2.y + 0.5),
+                q1 = new Tuple<double, double>(qq1.x + 0.5, qq1.y + 0.5),
+                q2 = new Tuple<double, double>(qq2.x + 0.5, qq2.y + 0.5);
+
+            double a1 = p2.Item2 - p1.Item2,
+                b1 = p2.Item1 - p1.Item1,
+                c1 = a1 * p1.Item1 + b1 * p1.Item2,
+                a2 = q2.Item2 - q1.Item2,
+                b2 = q2.Item1 - q1.Item1,
+                c2 = a2 * q2.Item2 - b2 * q1.Item2,
+                det = a1 * b2 - a2 * b1;
+
+            if (Math.Abs(det) > 1e-8)
+            {
+                double x = (b2 * c1 - b1 * c2) / det,
+                    y = (a1 * c2 - a2 * c1) / det;
+                S = new Point((int) x, (int) y);
+                return true;
+            }
+
+            S = new Point(-1, -1);
+            return false;
         }
 
         public static double FindDistanceToSegment(
