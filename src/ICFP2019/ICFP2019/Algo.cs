@@ -29,7 +29,7 @@ namespace ICFP2019
             {
                 if (!collectedBoosters.Remove(Booster.Manipulator)) throw new Exception("Missing manipulator boost");
                 Action.B b = (Action.B)a;
-                w.Manips.Add(w.relativeRotPosition(new Point(b.Item1, b.Item2)));
+                w.Manips.Add(new Point(b.Item1, b.Item2));
                 // TODO: checkare che il punto sia davvero adiacente
             }
             if (a.IsF)

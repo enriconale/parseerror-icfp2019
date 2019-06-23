@@ -43,28 +43,41 @@ namespace ICFP2019
 
         public void rotateClockwise()
         {
-            dir = (Dir)(((int)dir + 1) % 4);
+            //dir = (Dir)(((int)dir + 1) % 4);
+            var nm = new List<Point>();
+            foreach (var m in this.manips)
+            {
+                nm.Add(new Point(m.y, -m.x));
+            }
+            this.manips = nm;
         }
 
         public void rotateAntiClockwise()
         {
-            dir = (Dir)(((int)dir + 3) % 4);
+            //dir = (Dir)(((int)dir + 3) % 4);
+            var nm = new List<Point>();
+            foreach (var m in this.manips)
+            {
+                nm.Add(new Point(-m.y, m.x));
+            }
+            this.manips = nm;
         }
 
         public Point absolutePosition(Point p)
         {
-            int x = Loc.x, y = Loc.y;
-            switch (Dir)
-            {
-                case Dir.E: x += p.x; y += p.y; break;
-                case Dir.N: x += -p.y; y += p.x; break;
-                case Dir.W: x += -p.x; y += -p.y; break;
-                case Dir.S: x += p.y; y += -p.x; break;
-            }
-            return new Point(x, y);
+            //int x = Loc.x, y = Loc.y;
+            //switch (Dir)
+            //{
+            //    case Dir.E: x += p.x; y += p.y; break;
+            //    case Dir.N: x += -p.y; y += p.x; break;
+            //    case Dir.W: x += -p.x; y += -p.y; break;
+            //    case Dir.S: x += p.y; y += -p.x; break;
+            //}
+            //return new Point(x, y);
+            return new Point(Loc.x + p.x, Loc.y + p.y);
         }
 
-        public Point relativeRotPosition(Point p)
+        public Point _relativeRotPosition(Point p)
         {
             int x = 0; 
             int y = 0;
