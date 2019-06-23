@@ -24,29 +24,52 @@ namespace ICFP2019
             this.solution = new List<List<Action>>();
         }
 
-        public void solve() {
+        public Status S
+        {
+            get => this.s;
+        }
+
+        public void Init() {
+            for (int i = 0; i < wrappiesStartingActions.Count; i++)
+            {
+                var wacs = wrappiesStartingActions[i];
+                foreach (var wac in wacs)
+                {
+                    if (s.wrappies.Count <= i) throw new Exception("Malformed starting action: Using a not spawned wrappy");
+                    s.execute(wac, s.wrappies[i]);
+                }
+            }
+        }
+
+
+
+        /**
+         * return if solved
+         */
+        public bool solve()
+        {
             while (!s.isSolved())
             {
+                //if (s.prigoals.Count == 0)
+                //{
+                //    return false;
+                //}
                 this.solveStep();
             }
-        } 
+            return true;
+        }
 
         public void solveStep()
         {
-            foreach (var wrappy in s.wrappies)
+            foreach (var w in s.wrappies)
             {
-
+                //w.updateDistMap(s.Map);
             }
-            
-
-            // 1 AGGIORNAMENTO STATO WRAPPIES {MAPPA DISTANZE} 
-            // 2 PER OGNI WRAPPY RICALCOLO OBBIETTIV
-            // 3 PER OGNI OBBIETTIVO OTTENERE LE MOSSE
-            // 4 AGGREGARE LE MOSSE PER PRIORITA
-            // 5 PRENDERE LA MOSSA A PRIORITA'' PIU ALTA
-            // 6 ESEGUIRE LA MOSSA
-            // 7 AGGIORNARE LA MAPPA GLOBALE
-
+            foreach (var w in s.wrappies)
+            {
+                var a = w.nextAction();
+                s.execute(a, w);
+            }
 
         }
 

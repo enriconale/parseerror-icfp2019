@@ -77,7 +77,7 @@ namespace ICFP2019
         Manipulator, FastWheels, Teleport, Drill, Cloning, CloningPlatform
     }
 
-    public class Wrappy
+    public partial class Wrappy
     {
         private Point loc;
         private Dir dir;
