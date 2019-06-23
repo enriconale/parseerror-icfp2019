@@ -87,6 +87,11 @@ namespace ICFP2019
             return isNotEmpty(p.x, p.y, empty);
         }
 
+        public bool isMovable(Point p, T obstacle)
+        {
+            return !this[p.x,p.y].Equals(obstacle);
+        }
+
         public bool isNotEmpty(int x, int y, T empty)
         {
             return !this[x, y].Equals(empty);
