@@ -12,6 +12,7 @@ namespace ICFP2019
     {
         public static void Main(string[] args)
         {
+
             if (LaunchMassiveExecution)
             {
                 SolveProblemsInFolder();
@@ -87,5 +88,7 @@ namespace ICFP2019
 
             return files;
         }
+
+        public static void check
     }
 }

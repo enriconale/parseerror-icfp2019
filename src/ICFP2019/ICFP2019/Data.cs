@@ -53,6 +53,18 @@ namespace ICFP2019
 
         public int W { get => w; set => w = value; }
         public int H { get => h; set => h = value; }
+
+        public void fillWith(T t)
+        {
+            for (int i = 0; i < W; ++i)
+                for (int j = 0; j < H; ++j)
+                    a[i, j] = t;
+        }
+
+        public bool validCoordinate(Point p)
+        {
+            return (p.x >= 0 && p.x < W && p.y >= 0 && p.y < h);
+        }
     }
 
     public enum Dir
@@ -65,7 +77,7 @@ namespace ICFP2019
         Manipulator, FastWheels, Teleport, Drill, Cloning, CloningPlatform
     }
 
-    public class Wrappy
+    public partial class Wrappy
     {
         private Point loc;
         private Dir dir;
