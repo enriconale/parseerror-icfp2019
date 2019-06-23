@@ -30,7 +30,6 @@ namespace ICFP2019
                 w.Manips.Add(new Point(b.Item1, b.Item2));
                 // TODO: checkare che il punto sia davvero adiacente
             }
-            // TODO: gestire F, L e gli altri booster
             if (a.IsF)
             {
                 if (!collectedBoosters.Remove(Booster.FastWheels)) throw new Exception("Missing fast whill boost");

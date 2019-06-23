@@ -10,7 +10,6 @@ namespace ICFP2019
     }
 
 
-
     public class Map<T> where T : struct
     {
         private T[,] a;

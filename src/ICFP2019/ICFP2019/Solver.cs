@@ -8,19 +8,19 @@ namespace ICFP2019
 {
     class Solver
     {
-        private Status currentStatus;
+        private Status status;
         private List<List<Action>> wrappiesStartingActions;// TODO ... not used
         public List<List<Action>> solution;
 
         public Solver(Status status0)
         {
-            this.currentStatus = status0;
+            this.status = status0;
             this.solution = new List<List<Action>>();
         }
 
         public Solver(Status status0, List<List<Action>> wrappiesStartingActions)
         {
-            this.currentStatus = status0;
+            this.status = status0;
             this.wrappiesStartingActions = wrappiesStartingActions;
             this.solution = new List<List<Action>>();
         }
@@ -37,23 +37,30 @@ namespace ICFP2019
                 var wacs = wrappiesStartingActions[i];
                 foreach (var wac in wacs)
                 {
-                    if (currentStatus.wrappies.Count <= i) throw new Exception("Malformed starting action: Using a not spawned wrappy");
-                    currentStatus.execute(wac, currentStatus.wrappies[i]);
+                    if (status.wrappies.Count <= i) throw new Exception("Malformed starting action: Using a not spawned wrappy");
+                    status.execute(wac, status.wrappies[i]);
                 }
             }
         }
 
         public void Loop()
         {
-            while (!currentStatus.isSolved())
+            while (!status.isSolved())
             {
-                foreach (var w in currentStatus.wrappies)
+                foreach (var w in status.wrappies)
                 {
-                    //w.LastAction 
-                    w.updateDistMap(currentStatus.map, currentStatus.goals);
-                    Wrappy.PriPath pp = w.BestShortestPath();
                     Action a = null;
-                    currentStatus.execute(a, w);
+                    if (w.LastAction != Action.C)
+                    {
+                        if (status.collectedBoosters.Contains(Booster.Cloning)
+                            && status.boosters.Exists((kvp) => kvp.Key == Booster.CloningPlatform && kvp.Value.Equals(w.Loc)))
+                            a = Action.C;
+                        else if (status.collectedBoosters.Contains(Booster.FastWheels))
+                            a = Action.F;
+                    }
+                    w.updateDistMap(status.map, status.goals);
+                    Wrappy.PriPath pp = w.BestShortestPath();
+                    status.execute(a, w);
                 }
             }
         }
