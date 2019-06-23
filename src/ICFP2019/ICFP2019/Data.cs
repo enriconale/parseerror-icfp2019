@@ -10,9 +10,9 @@ namespace ICFP2019
     {
         Empty = 0, Filled = 1, Obstacle = 2
     }
-    
 
-        
+
+
     public class Map<T> where T : struct
     {
         private T[,] a;
@@ -86,12 +86,12 @@ namespace ICFP2019
 
         public void rotateClockwise()
         {
-            dir = (Dir) (((int) dir + 1) % 4);
+            dir = (Dir)(((int)dir + 1) % 4);
         }
 
         public void rotateAntiClockwise()
         {
-            dir = (Dir)(((int) dir + 3) % 4);
+            dir = (Dir)(((int)dir + 3) % 4);
         }
 
         public Point absolutePosition(Point p)
@@ -111,8 +111,8 @@ namespace ICFP2019
         {
             List<Point> r = new List<Point>();
             if (distMap[dst] == Graph.UNREACHABLE)
-            r.Add(dst);
-            for (Point p; dst != Loc; )
+                r.Add(dst);
+            for (Point p; dst != Loc;)
             {
                 int d = distMap[dst];
                 if (dst.y + 1 <= distMap.H - 1 && distMap[(p = new Point(dst.x, dst.y + 1))] == d - 1
@@ -138,6 +138,66 @@ namespace ICFP2019
         public int DistTo(int x, int y)
         {
             return distMap[x, y];
+        }
+
+        public struct Candidate
+        {
+            public PriGoal priGoal;
+            public List<Point> path;
+        }
+
+        private double priOfCandidates(List<Candidate> cands)
+        {
+            double r = 0.0;
+            foreach (var cand in cands)
+            {
+                r += 1.00 / Math.Pow(cand.priGoal.pri, 2.0);
+            }
+            return r;
+        }
+
+        public struct PriPath
+        {
+            public double pri;
+            public List<Point> path;
+        }
+
+        private List<Point> findMin(List<Candidate> cands)
+        {
+            cands.Sort((c1, c2) => c1.priGoal.pri - c2.priGoal.pri);
+            return cands[0].path;
+        }
+
+        public PriPath BestShortestPath()
+        {
+            List<Candidate> N = new List<Candidate>();
+            List<Candidate> S = new List<Candidate>();
+            List<Candidate> E = new List<Candidate>();
+            List<Candidate> W = new List<Candidate>();
+            foreach (var priGoal in priGoals)
+            {
+                Goal.GoTo goTo = (Goal.GoTo)priGoal.goal;
+                List<Point> path = ShortestPath(new Point(goTo.Item1, goTo.Item2));
+                Point p1 = path[0];
+                Candidate c = new Candidate { priGoal = priGoal, path = path };
+                if (p1.x == Loc.x - 1 && p1.y == Loc.y) W.Add(c);
+                if (p1.x == Loc.x + 1 && p1.y == Loc.y) E.Add(c);
+                if (p1.y == Loc.y - 1 && p1.x == Loc.x) S.Add(c);
+                if (p1.y == Loc.y + 1 && p1.x == Loc.x) N.Add(c);
+            }
+
+            double pN = priOfCandidates(N);
+            double pS = priOfCandidates(S);
+            double pE = priOfCandidates(E);
+            double pW = priOfCandidates(W);
+
+            if (pN > pS && pN > pW && pN > pE)
+                return new PriPath { pri = pN, path = findMin(N) };
+            if (pS > pN && pS > pW && pS > pE)
+                return new PriPath { pri = pS, path = findMin(S) };
+            if (pW > pN && pW > pS && pW > pE)
+                return new PriPath { pri = pW, path = findMin(W) };
+            else return new PriPath { pri = pE, path = findMin(E) };
         }
 
     }
