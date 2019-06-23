@@ -62,6 +62,7 @@ namespace ICFP2019
                     if (a == null)
                     {
                         w.updateDistMap(status.map, status.goals);
+                        DijkstraPrettyPrinter.printDijkstraMap(status, w);
                         Wrappy.PriPath pp = w.BestShortestPath();
                         Point d = pp.path[0];
                         if (d.x == w.Loc.x - 1 && d.y == w.Loc.y) a = Action.A;
