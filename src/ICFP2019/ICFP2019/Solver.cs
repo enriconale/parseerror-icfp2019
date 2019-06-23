@@ -65,6 +65,7 @@ namespace ICFP2019
                         if (d.y == w.Loc.y + 1 && d.x == w.Loc.x) a = Action.W;
                     }
                     status.execute(a, w);
+                    status.CalculateGoals();
                 }
             }
         }

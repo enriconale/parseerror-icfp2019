@@ -95,23 +95,6 @@ namespace ICFP2019
 
         private bool isVisible(Point p1, Point p2)
         {
-            var x0 = Math.Min(p1.x, p2.x);
-            var y0 = Math.Min(p1.y, p2.y);
-            var x1 = Math.Max(p1.x, p2.x);
-            var y1 = Math.Max(p1.y, p2.y);
-            for (int x = x0; x <= x1; x++)
-            {
-                for (int y = y0; y < y1; y++)
-                {
-                    if (map[x, y].Equals(Tile.Obstacle)) {
-                        var dist =Point.FindDistanceToSegment(
-                            new Point(x,y), p1, p2
-                            );
-                        if (Math.Round(dist - Math.Sqrt(2) / 2) < 0) return false;
-                    }
-                }
-            }
-
             return true;//TODO implement visibility
         }
 
