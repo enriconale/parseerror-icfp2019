@@ -66,6 +66,7 @@ namespace ICFP2019
 
         public bool isCorner(int x, int y, T empty) {
             return
+                !isNotEmpty(x, y, empty) &&
                 ((!validCoordinate(x - 1, y) || isNotEmpty(x - 1, y, empty)) ||
                  (!validCoordinate(x + 1, y) || isNotEmpty(x + 1, y, empty))) &&
                 ((!validCoordinate(x, y - 1) || isNotEmpty(x, y - 1, empty)) ||

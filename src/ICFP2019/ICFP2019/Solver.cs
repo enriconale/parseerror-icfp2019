@@ -40,10 +40,10 @@ namespace ICFP2019
         {
             while (!status.isSolved())
             {
-                //StatisticalPrettyPrinter.printStats(status);
+                StatisticalPrettyPrinter.printStats(status);
                 foreach (var w in status.wrappies)
                 {
-                    //DijkstraPrettyPrinter.printDijkstraMap(status.Map, w);
+                    DijkstraPrettyPrinter.printDijkstraMap(status.Map, w);
                     Action a = null;
                     if (w.LastAction != Action.C)
                     {
