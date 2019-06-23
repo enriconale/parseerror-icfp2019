@@ -108,32 +108,33 @@ namespace ICFP2019
                 {
                     q1 = new Point(x, y0);
                     q2 = new Point(x, y1);
-                    if (Point.FindIntersection(p1, p2, q1, q2, out s))
+                    s = Point.FindIntersection(p1, p2, q1, q2);
                     {
-                        if (map[s.x, s.y] == Tile.Obstacle)
+                        if (map.validCoordinate(s) && map[s.x, s.y] == Tile.Obstacle)
                         {
                             return false;
                         }
                     }
                 }
-                return true;
             }
-            else
+            else if (Math.Abs(x0 - x1) < Math.Abs(y0 - y1))
             {
                 for (int y = y0 +1; y < y1; ++y)
                 {
                     q1 = new Point(x0, y);
                     q2 = new Point(x1, y);
-                    if (Point.FindIntersection(p1, p2, q1, q2, out s))
+                    s = Point.FindIntersection(p1, p2, q1, q2);
+                    s.y -= 1;
+                    if (map.validCoordinate(s) && map[s.x, s.y] == Tile.Obstacle)
                     {
-                        if (map[s.x, s.y] == Tile.Obstacle)
+                        if (map.validCoordinate(s) && map[s.x, s.y] == Tile.Obstacle)
                         {
                             return false;
                         }
                     }
                 }
-                return true;
             }
+            return true;
         }
 
         public bool isSolved()
