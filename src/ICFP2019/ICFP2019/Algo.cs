@@ -86,7 +86,7 @@ namespace ICFP2019
             map[w.Loc] = Tile.Filled;
             foreach (Point p in w.Manips)
             {
-                if (map[w.absolutePosition(p)] == Tile.Empty && isVisible(w.Loc, w.absolutePosition(p)))
+                if (map.validCoordinate(p) && map[w.absolutePosition(p)] == Tile.Empty && isVisible(w.Loc, w.absolutePosition(p)))
                 {
                     map[w.absolutePosition(p)] = Tile.Filled;
                 }
