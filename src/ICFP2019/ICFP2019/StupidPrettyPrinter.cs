@@ -43,6 +43,7 @@ namespace ICFP2019
                 }
                 file.WriteLine("");
             }
+            file.Close();
         }
 
         private static string getMappedStringValue(Booster booster)
