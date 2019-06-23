@@ -124,7 +124,7 @@ namespace ICFP2019
             List<Point> r = new List<Point>();
             if (distMap[dst] == Graph.UNREACHABLE)
                 r.Add(dst);
-            for (Point p; dst != Loc;)
+            for (Point p; !dst.Equals(Loc);)
             {
                 int d = distMap[dst];
                 if (dst.y + 1 <= distMap.H - 1 && distMap[(p = new Point(dst.x, dst.y + 1))] == d - 1

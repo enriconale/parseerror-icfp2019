@@ -8,37 +8,44 @@ namespace ICFP2019
 {
     class Solver
     {
-        private Status s;
+        private Status currentStatus;
         private List<List<Action>> wrappiesStartingActions;// TODO ... not used
         public List<List<Action>> solution;
 
-        public Solver(Status startingState) {
-            this.s = startingState;
+        public Solver(Status status0)
+        {
+            this.currentStatus = status0;
             this.solution = new List<List<Action>>();
         }
 
-        public Solver(Status startingState, List<List<Action>> wrappiesStartingActions)
+        public Solver(Status status0, List<List<Action>> wrappiesStartingActions)
         {
-            this.s = startingState;
+            this.currentStatus = status0;
             this.wrappiesStartingActions = wrappiesStartingActions;
             this.solution = new List<List<Action>>();
         }
 
-        public Status S
+        public Status CurrentStatus
         {
-            get => this.s;
+            get => this.currentStatus;
         }
 
-        public void Init() {
+        public void Init()
+        {
             for (int i = 0; i < wrappiesStartingActions.Count; i++)
             {
                 var wacs = wrappiesStartingActions[i];
                 foreach (var wac in wacs)
                 {
-                    if (s.wrappies.Count <= i) throw new Exception("Malformed starting action: Using a not spawned wrappy");
-                    s.execute(wac, s.wrappies[i]);
+                    if (currentStatus.wrappies.Count <= i) throw new Exception("Malformed starting action: Using a not spawned wrappy");
+                    currentStatus.execute(wac, currentStatus.wrappies[i]);
                 }
             }
+        }
+
+        public void Loop()
+        {
+
         }
 
 
@@ -48,7 +55,7 @@ namespace ICFP2019
          */
         public bool solve()
         {
-            while (!s.isSolved())
+            while (!currentStatus.isSolved())
             {
                 //if (s.prigoals.Count == 0)
                 //{
@@ -61,14 +68,14 @@ namespace ICFP2019
 
         public void solveStep()
         {
-            foreach (var w in s.wrappies)
+            foreach (var w in currentStatus.wrappies)
             {
                 //w.updateDistMap(s.Map);
             }
-            foreach (var w in s.wrappies)
+            foreach (var w in currentStatus.wrappies)
             {
                 var a = w.nextAction();
-                s.execute(a, w);
+                currentStatus.execute(a, w);
             }
 
         }
