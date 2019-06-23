@@ -2,7 +2,7 @@ namespace ICFP2019
 {
     partial class Program
     {
-        private const string problemPath = "";
-        private const string stupidPrinterOutputPath = "";
+        private const string ProblemPath = "";
+        private const string StupidPrinterOutputPath = "";
     }
 }

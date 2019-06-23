@@ -16,18 +16,18 @@ namespace ICFP2019
             String problemTempSolutions = ".tmp";
             String problemSolution = ".sol";
 
-            if (File.Exists(problemPath + problemExtension))
+            if (File.Exists(ProblemPath + problemExtension))
             {
-                string problem = File.ReadAllText(problemPath + problemExtension);
+                string problem = File.ReadAllText(ProblemPath + problemExtension);
                 string[] tempSolutions = null;
-                if (File.Exists(problemPath + problemTempSolutions))
+                if (File.Exists(ProblemPath + problemTempSolutions))
                 {
-                    tempSolutions = File.ReadAllLines(problemPath + problemTempSolutions);
+                    tempSolutions = File.ReadAllLines(ProblemPath + problemTempSolutions);
                 }
                 Status status = Parser.parseProblem(problem);
-                if (!"".Equals(stupidPrinterOutputPath))
+                if (!"".Equals(StupidPrinterOutputPath))
                 {
-                    StupidPrettyPrinter.printParsedMap(status.map, status.boosters, stupidPrinterOutputPath);
+                    StupidPrettyPrinter.printParsedMap(status.map, status.boosters, StupidPrinterOutputPath);
                 }
 
                 StatisticalPrettyPrinter.printStats(status);
