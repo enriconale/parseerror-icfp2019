@@ -22,13 +22,11 @@ namespace ICFP2019.Properties
             return min;
         }
 
-        private Map<int> CalculateMap(Wrappy w)
+        private Map<int> calculateMap(Wrappy w)
         {
             Map<int> distMap = new Map<int>(map.W, map.H);
 
-            for (int i = 0; i < map.W; ++i)
-                for (int j = 0; j < map.H; ++j)
-                    distMap.fillWith(UNREACHABLE);
+            distMap.fillWith(UNREACHABLE);
             distMap[w.Loc] = 0;
 
             Point p = new Point();
