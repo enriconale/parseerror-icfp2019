@@ -92,7 +92,7 @@ namespace ICFP2019
 
         private bool isVisible(Point p1, Point p2)
         {
-
+            return true;//TODO implement visibility
         }
 
         public Action computeAction(Goal g)
