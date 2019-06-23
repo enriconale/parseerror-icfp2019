@@ -67,10 +67,11 @@ namespace ICFP2019
 
     public class Wrappy
     {
-        public Point loc;
-        public Dir dir;
-        public List<Point> manips;
+        private Point loc;
+        private Dir dir;
+        private List<Point> manips;
         private Map<int> distMap;
+        public List<PriGoal> priGoals;
 
         public Wrappy(Point loc)
         {
@@ -106,10 +107,32 @@ namespace ICFP2019
             return new Point(x, y);
         }
 
-        public void updateDistMap(Map<Tile> map)
+        public List<Point> ShortestPath(Point dst)
+        {
+            List<Point> r = new List<Point>();
+            if (distMap[dst] == Graph.UNREACHABLE)
+            r.Add(dst);
+            for (Point p; dst != Loc; )
+            {
+                int d = distMap[dst];
+                if (dst.y + 1 <= distMap.H - 1 && distMap[(p = new Point(dst.x, dst.y + 1))] == d - 1
+                   || dst.y > 0 && distMap[(p = new Point(dst.x, dst.y - 1))] == d - 1
+                   || dst.x > 0 && distMap[(p = new Point(dst.x - 1, dst.y))] == d - 1
+                   || dst.x + 1 <= distMap.W - 1 && distMap[(p = new Point(dst.x + 1, dst.y))] == d - 1)
+                {
+                    r.Insert(0, p);
+                    dst = p;
+                }
+            }
+            return r;
+        }
+
+        public void updateDistMap(Map<Tile> map, List<Goal> goals)
         {
             Graph graph = new Graph(map);
-            distMap = graph.CalculateMap(Loc);
+            Graph.Result res = graph.CalculateMap(this, goals);
+            distMap = res.distMap;
+            priGoals = res.priGoals;
         }
 
         public int DistTo(int x, int y)
@@ -131,13 +154,12 @@ namespace ICFP2019
         public List<Wrappy> wrappies;
         public readonly List<KeyValuePair<Booster, Point>> boosters;
         public List<Booster> collectedBoosters = new List<Booster>();
-        public List<PriGoal> prigoals;
+        public List<Goal> goals;
 
         public Status(Map<Tile> map, Point wrappyLoc, List<KeyValuePair<Booster, Point>> boosters)
         {
             this.map = map;
-            Wrappy firstWrappy = new Wrappy(wrappyLoc);
-            this.wrappies = new List<Wrappy>(new Wrappy[] {firstWrappy});
+            this.wrappies = new List<Wrappy> { new Wrappy(wrappyLoc) };
             this.boosters = boosters;
             // TODO: calculare i corner della mappa qui o ce li facciamo passare in construzione?
         }

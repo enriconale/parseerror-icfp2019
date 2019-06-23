@@ -143,9 +143,35 @@ namespace ICFP2019
             return x == other.x || y == other.y;
         }
 
+        public override bool Equals(object obj)
+        {
+            var point = obj as Point;
+            return point != null &&
+                   x == point.x &&
+                   y == point.y;
+        }
+
+        public override int GetHashCode()
+        {
+            var hashCode = 1502939027;
+            hashCode = hashCode * -1521134295 + x.GetHashCode();
+            hashCode = hashCode * -1521134295 + y.GetHashCode();
+            return hashCode;
+        }
+
         public static Point operator+(Point p1, Point p2)
         {
             return new Point(p1.x + p2.x, p1.y + p2.y);
+        }
+
+        public static bool operator==(Point p1, Point p2)
+        {
+            return p1.Equals(p2);
+        }
+
+        public static bool operator!=(Point p1, Point p2)
+        {
+            return !(p1 == p2);
         }
 
     }
