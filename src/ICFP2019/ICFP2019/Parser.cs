@@ -176,6 +176,13 @@ namespace ICFP2019
             this.y = y;
         }
 
+        public Point(Action a) {
+            if (a.IsW) { this.x = 0; this.y = 1; };
+            if (a.IsA) { this.x = -1; this.y = 0; };
+            if (a.IsD) { this.x = 1; this.y = 0; } ;
+            if (a.IsS) { this.x = 0; this.y = -1; };
+        }
+
         public Point(String coords) {
             var cs = coords.Split(',');
             if (cs.Length != 2) throw new Exception("Point coords parsing error: " + coords);
@@ -231,6 +238,16 @@ namespace ICFP2019
 	    public static Point operator-(Point p1, Point p2)
         {
             return new Point(p1.x - p2.x, p1.y - p2.y);
+        }
+
+        private static Point calculateMove(Action a)
+        {
+            Point m = null;//TODO use switch?
+            if (a.IsW) m = new Point(0, 1);
+            if (a.IsA) m = new Point(-1, 0);
+            if (a.IsD) m = new Point(1, 0);
+            if (a.IsS) m = new Point(0, -1);
+            return m;
         }
 
     }
