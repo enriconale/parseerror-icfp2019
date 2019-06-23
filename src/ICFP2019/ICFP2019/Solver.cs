@@ -73,6 +73,9 @@ namespace ICFP2019
                     status.CalculateGoals();
                 }
             }
+            StatisticalPrettyPrinter.printStats(status);
+            DijkstraPrettyPrinter.printDijkstraMap(status.Map, status.wrappies[0]);
+
         }
     }
 }
