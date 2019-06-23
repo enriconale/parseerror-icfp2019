@@ -24,7 +24,7 @@ namespace ICFP2019.ShortestTileAlgo
             return min;
         }
 
-        public ICFP2019.Dijkstra.Graph.Result calculateMap(Wrappy w, List<Goal> goals)
+        public Dijkstra.Graph.Result calculateMap(Wrappy w, List<Goal> goals)
         {
             Map<int> distMap = new Map<int>(map.W, map.H);
             int max_goals = Math.Min(MAX_GOALS, goals.Count);
@@ -85,7 +85,7 @@ namespace ICFP2019.ShortestTileAlgo
                 });
             }
 
-            return new ICFP2019.Dijkstra.Graph.Result { 
+            return new Dijkstra.Graph.Result { 
                 distMap = distMap,
                 priGoals = priGoals
             };

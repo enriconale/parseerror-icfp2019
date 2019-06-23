@@ -56,13 +56,13 @@ namespace ICFP2019
             updateStatus(w);
         }
 
-        private static void Move(Action a, Wrappy w)
+        private void Move(Action a, Wrappy w)
         {
-            if (a.IsW) w.Loc += new Point(0, 1);
-            if (a.IsA) w.Loc += new Point(-1, 0);
-            if (a.IsD) w.Loc += new Point(1, 0);
-            if (a.IsS) w.Loc += new Point(0, -1);
+            var newLoc = w.Loc + new Point(a);
+            if (map.isNotEmpty(newLoc, Tile.Empty)) return; // TOCHECK throwException? // NO, in case of fast wheel
+            else w.Loc += newLoc ;
         }
+
 
         private void updateStatus(Wrappy w)
         {

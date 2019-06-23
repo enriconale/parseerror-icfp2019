@@ -40,12 +40,12 @@ namespace ICFP2019
                 Status status = Parser.parseProblem(problem);
                 if (!"".Equals(StupidPrinterOutputPath))
                 {
-                    StupidPrettyPrinter.printParsedMap(status.map, status.boosters, StupidPrinterOutputPath);
+                    StupidPrettyPrinter.PrintParsedMap(status, StupidPrinterOutputPath);
                 }
                 Solver solver = new Solver(status, tempSolutions);
                 solver.Init();
                 //solver.solve();
-                //printSolution(problemPath, problemSolution, solver);
+                //PrintSolution(problemPath, problemSolution, solver);
             }
         }
 
@@ -112,7 +112,7 @@ namespace ICFP2019
             return tempSolutions;
         }
 
-        private static void printSolution(string problemPath, string problemSolution, Solver solver)
+        private static void PrintSolution(string problemPath, string problemSolution, Solver solver)
         {
             System.IO.StreamWriter file =
                 new System.IO.StreamWriter(problemPath + problemSolution, false);
