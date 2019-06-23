@@ -32,19 +32,20 @@ namespace ICFP2019
             if (File.Exists(problemPath + problemExtension))
             {
                 string problem = File.ReadAllText(problemPath + problemExtension);
-                string[] tempSolutions = null;
+                List<List<Action>> tempSolutions = new List<List<Action>>();
                 if (File.Exists(problemPath + problemTempSolutions))
                 {
-                    tempSolutions = File.ReadAllLines(problemPath + problemTempSolutions);
+                    tempSolutions = ParseTempSolution(problemPath, problemTempSolutions);
                 }
                 Status status = Parser.parseProblem(problem);
                 if (!"".Equals(StupidPrinterOutputPath))
                 {
                     StupidPrettyPrinter.printParsedMap(status.map, status.boosters, StupidPrinterOutputPath);
                 }
-                Solver solver = new Solver(status);
+                Solver solver = new Solver(status, tempSolutions);
+                solver.Init();
                 //solver.solve();
-                printSolution(problemPath, problemSolution, solver);
+                //printSolution(problemPath, problemSolution, solver);
             }
         }
 
@@ -70,14 +71,61 @@ namespace ICFP2019
             }
         }
 
+        private static List<List<Action>> ParseTempSolution(string problemPath, string problemTempSolutions)
+        {
+            string tmpSolutionString = File.ReadAllLines(problemPath + problemTempSolutions).First();
+            List<List<Action>> tempSolutions = new List<List<Action>>();
+            List<Action> currentActions = new List<Action>();
+            for (int i = 0; i < tmpSolutionString.Length;)
+            {
+                string action = tmpSolutionString[i].ToString();
+                if ("#".Equals(action))
+                {
+                    tempSolutions.Add(currentActions);
+                    currentActions = new List<Action>();
+                    i++;
+                }
+                else
+                {
+                    if (action == "B" || action == "R")
+                    {
+                        int j = i;
+                        while (tmpSolutionString[j] != ')')
+                        {
+                            j++;
+                        }
+
+                        j++;
+
+                        action = tmpSolutionString.Substring(i, j-i);
+                        i = j;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                    currentActions.Add(Parser.parseAction(action));
+                }
+            }
+            tempSolutions.Add(currentActions);
+
+            return tempSolutions;
+        }
+
         private static void printSolution(string problemPath, string problemSolution, Solver solver)
         {
             System.IO.StreamWriter file =
                 new System.IO.StreamWriter(problemPath + problemSolution, false);
             List<List<Action>> solution = solver.solution;
-            foreach (var sol in solution)
+            foreach (List<Action> sol in solution)
             {
-                file.Write("X");
+                foreach (Action action in sol)
+                {
+                    //TODO write correct actions
+                    file.Write("$");
+                }
+                //TODO do not append # after last action
+                file.Write("#");
             }
             file.Close();
         }
@@ -85,9 +133,7 @@ namespace ICFP2019
         private static string[] GetFilesInFolder(string folderPath)
         {
             var files = Directory.GetFiles(folderPath);
-
             return files;
         }
-
     }
 }

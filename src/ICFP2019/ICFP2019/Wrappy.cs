@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ICFP2019
 {
-    partial class Wrappy
+    public partial class Wrappy
     {
         public List<Action> executeds = new List<Action>();
         public int remainingFastWheel = 0;

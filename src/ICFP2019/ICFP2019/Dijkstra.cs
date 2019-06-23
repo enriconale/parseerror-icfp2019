@@ -121,7 +121,7 @@ namespace ICFP2019.Dijkstra
                 {
                     priGoals.Add(new PriGoal { goal = goals[i], pri = minEdge.Value });
                     if (priGoals.Count >= max_goals)
-                        new Result { distMap = distMap, priGoals = priGoals };
+                        return new Result { distMap = distMap, priGoals = priGoals };
                 }
 
                 minVertices[v2] = true;

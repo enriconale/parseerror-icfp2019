@@ -49,7 +49,7 @@ namespace ICFP2019
             if (a.IsC)
             {
                 if (!collectedBoosters.Remove(Booster.Cloning)) throw new Exception("Missing Cloning boost");
-                if (boosters.Find((kvp) => kvp.Value == w.Loc).Key != Booster.CloningPlatform) throw new Exception("Cloning not in a platform");
+                if (boosters.Find((kvp) => kvp.Value.Equals(w.Loc)).Key != Booster.CloningPlatform) throw new Exception("Cloning not in a platform");
                 wrappies.Add(new Wrappy(w.Loc));
                 
             }
@@ -69,7 +69,7 @@ namespace ICFP2019
         {
             updateMap(w);
             // colleziona il booster se wrappy ci sta sopra
-            int i = boosters.FindIndex((kvp) => kvp.Value == w.Loc);
+            int i = boosters.FindIndex((kvp) => kvp.Value.Equals(w.Loc));
             if (i >= 0) {
                 var b = boosters[i];
                 collectedBoosters.Add(b.Key);

@@ -14,7 +14,50 @@ namespace ICFP2019
         private static int maxX = 0;
         private static int maxY = 0;
 
+        public static Action parseAction(String a)
+        {
+            //W | S | A | D | Z | E | Q | B of int * int | F | L | R of int * int | C 
+            switch (a)
+            {
+                case "W":
+                    return Action.W;
+                case "S":
+                    return Action.S;
+                case "A":
+                    return Action.A;
+                case "D":
+                    return Action.D;
+                case "Z":
+                    return Action.Z;
+                case "E":
+                    return Action.E;
+                case "Q":
+                    return Action.Q;
+                case "F":
+                    return Action.F;
+                case "L":
+                    return Action.L;
+                case "C":
+                    return Action.C;
+                default:
+                    return parseComplexAction(a);
+            }
+        }
 
+        private static Action parseComplexAction(string a)
+        {
+            var p = parsePoint(a);
+            if (a.StartsWith("B"))
+            {
+                return Action.NewB(p.x, p.y);
+            }
+            else if (a.StartsWith("R"))
+            {
+                return Action.NewR(p.x, p.y);
+            }
+            else
+                throw new Exception("Parsing unsupported Action");
+        }
 
         public static Status parseProblem(String problem) {
             var problemElements = problem.Split('#');
@@ -35,7 +78,7 @@ namespace ICFP2019
             foreach (var b in bl)
             {
                 var type = b.Substring(0, 1);
-                var pc = Regex.Match(b, @"(\d+,\d+)").Value;
+                var point = parsePoint(b);
                 Booster bt;
                 switch (type)
                 {
@@ -60,9 +103,13 @@ namespace ICFP2019
                     default:
                         throw new Exception("Unidetified booster");
                 }
-                result.Add(new KeyValuePair<Booster, Point>(bt, new Point(pc)));
+                result.Add(new KeyValuePair<Booster, Point>(bt,point));
             }
             return result;
+        }
+
+        public static Point parsePoint(String p) {
+            return new Point(Regex.Match(p, @"(\d+,\d+)").Value);
         }
 
         public static Map<Tile> parseMap(String map, List<String> obstacles) {
@@ -181,19 +228,9 @@ namespace ICFP2019
             return new Point(p1.x + p2.x, p1.y + p2.y);
         }
 
-        public static Point operator-(Point p1, Point p2)
+	public static Point operator-(Point p1, Point p2)
         {
             return new Point(p1.x - p2.x, p1.y - p2.y);
-        }
-
-        public static bool operator==(Point p1, Point p2)
-        {
-            return p1.Equals(p2);
-        }
-
-        public static bool operator!=(Point p1, Point p2)
-        {
-            return !(p1 == p2);
         }
 
     }
