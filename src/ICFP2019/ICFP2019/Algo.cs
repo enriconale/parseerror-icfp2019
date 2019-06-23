@@ -61,8 +61,9 @@ namespace ICFP2019
         private void Move(Action a, Wrappy w)
         {
             var newLoc = w.Loc + new Point(a);
-            if (!map.isNotEmpty(newLoc, Tile.Empty))  // TOCHECK throwException? // NO, in case of fast wheel
-                w.Loc += newLoc;
+            if (map.isMovable(newLoc, Tile.Obstacle))  // TOCHECK throwException? // NO, in case of fast wheel
+                w.Loc = newLoc;
+            else { }
         }
 
 
