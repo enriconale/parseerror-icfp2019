@@ -15,7 +15,7 @@ namespace ICFP2019
             this.map = map;
             this.wrappies = new List<Wrappy> { new Wrappy(wrappyLoc) };
             this.boosters = boosters;
-            calculateGoals();
+            CalculateGoals();
         }
 
         public Map<Tile> Map { get => map; set => map = value; }
