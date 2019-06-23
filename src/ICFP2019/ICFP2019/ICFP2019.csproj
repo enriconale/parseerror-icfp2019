@@ -46,6 +46,7 @@
     <Compile Include="Algo.cs" />
     <Compile Include="Data.cs" />
     <Compile Include="Dijkstra.cs" />
+    <Compile Include="DijkstraPrettyPrinter.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProgramConstants.cs" />
