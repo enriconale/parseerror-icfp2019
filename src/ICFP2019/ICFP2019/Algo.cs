@@ -6,42 +6,42 @@ namespace ICFP2019
 {
     public partial class Status
     {
-        public void execute(Action a)
+        public void execute(Action a, Wrappy w)
         {
-            if (a.IsW) wrappies[0].Loc += new Point(0, 1);
-            if (a.IsA) wrappies[0].Loc += new Point(-1, 0);
-            if (a.IsD) wrappies[0].Loc += new Point(1, 0);
-            if (a.IsS) wrappies[0].Loc += new Point(0, -1);
+            if (a.IsW) w.Loc += new Point(0, 1);
+            if (a.IsA) w.Loc += new Point(-1, 0);
+            if (a.IsD) w.Loc += new Point(1, 0);
+            if (a.IsS) w.Loc += new Point(0, -1);
 
-            if (a.IsE) wrappies[0].rotateClockwise();
-            if (a.IsQ) wrappies[0].rotateAntiClockwise();
+            if (a.IsE) w.rotateClockwise();
+            if (a.IsQ) w.rotateAntiClockwise();
 
             if (a.IsB)
             {
                 Action.B b = (Action.B) a;
-                wrappies[0].Manips.Add(new Point(b.Item1, b.Item2));
+                w.Manips.Add(new Point(b.Item1, b.Item2));
                 // TODO: checkare che il punto sia davvero adiacente
             }
             // TODO: gestire F, L e gli altri booster
 
-            updateStatus();
+            updateStatus(w);
         }
 
-        private void updateStatus()
+        private void updateStatus(Wrappy w)
         {
-            updateMap();
+            updateMap(w);
             // colleziona il booster se wrappy ci sta sopra
-            int i = boosters.FindIndex((kvp) => kvp.Value == wrappies[0].Loc);
+            int i = boosters.FindIndex((kvp) => kvp.Value == w.Loc);
             if (i >= 0) collectedBoosters.Add(boosters[i].Key);
             // TODO: usare subito i booster semplici: fastwheel e manip
         }
 
-        private void updateMap()
+        private void updateMap(Wrappy w)
         {
-            map[wrappies[0].Loc] = Tile.Filled;
-            foreach (Point p in wrappies[0].Manips)
+            map[w.Loc] = Tile.Filled;
+            foreach (Point p in w.Manips)
             {
-                map[wrappies[0].absolutePosition(p)] = Tile.Filled;
+                map[w.absolutePosition(p)] = Tile.Filled;
             }
         }
 
@@ -57,5 +57,17 @@ namespace ICFP2019
             }
             return null;
         }
+
+        public bool isSolved() {
+            for (int h = 0; h < map.H; h++)
+            {
+                for (int w = 0; w < map.W; w++)
+                {
+                    if (map[w, h] == Tile.Empty) return false;
+                }
+            }
+            return true;
+        }
+
     }
 }
