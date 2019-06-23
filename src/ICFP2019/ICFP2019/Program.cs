@@ -12,6 +12,10 @@ namespace ICFP2019
     {
         public static void Main(string[] args)
         {
+            var pt = new Point(1, 1);
+            var p1 = new Point(1, 0);
+            var p2 = new Point(0, 1);
+            var dist = Point.FindDistanceToSegment(pt, p1, p2);
 
             if (LaunchMassiveExecution)
             {

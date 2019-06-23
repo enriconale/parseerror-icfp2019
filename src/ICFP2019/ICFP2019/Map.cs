@@ -75,16 +75,16 @@ namespace ICFP2019
 
         private int countNotEmpty(int x, int y, T empty)
         {
-            return (this[x - 1, y].Equals(empty)) ? 0 : 1;
+            return (this[x, y].Equals(empty)) ? 0 : 1;
         }
 
         public bool isNotEmpty(Point p, T empty) {
             return isNotEmpty(p.x, p.y, empty);
         }
 
-        private bool isNotEmpty(int x, int y, T empty)
+        public bool isNotEmpty(int x, int y, T empty)
         {
-            return this[x - 1, y].Equals(empty);
+            return this[x, y].Equals(empty);
         }
     }
 }

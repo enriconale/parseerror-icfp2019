@@ -118,5 +118,48 @@ namespace ICFP2019
             return m;
         }
 
+        public static double FindDistanceToSegment(
+                Point ppt, Point pp1, Point pp2)
+        {
+            Tuple<float, float> pt = new Tuple<float, float>(ppt.x + 0.5f, ppt.y + 0.5f);
+            Tuple< float, float> p1 =  new Tuple<float, float>(pp1.x + 0.5f, pp1.y + 0.5f);
+            Tuple<float, float> p2 = new Tuple<float, float>(pp2.x + 0.5f, pp2.y + 0.5f);
+            Tuple<float, float> closest = new Tuple<float, float>( 0f , 0f );
+            float dx = p2.Item1 - p1.Item1;
+            float dy = p2.Item2 - p1.Item2;
+            if ((dx == 0) && (dy == 0))
+            {
+                // It's a point not a line segment.
+                dx = pt.Item1 - p1.Item1;
+                dy = pt.Item2 - p1.Item2;
+                return Math.Sqrt(dx * dx + dy * dy);
+            }
+
+            // Calculate the t that minimizes the distance.
+            float t = ((pt.Item1 - p1.Item1) * dx + (pt.Item2 - p1.Item2) * dy) /
+                (dx * dx + dy * dy);
+
+            // See if this represents one of the segment's
+            // end points or a point in the middle.
+            if (t < 0)
+            {
+                dx = pt.Item1 - p1.Item1;
+                dy = pt.Item2 - p1.Item2;
+            }
+            else if (t > 1)
+            {
+                dx = pt.Item1 - p2.Item1;
+                dy = pt.Item2 - p2.Item2;
+            }
+            else
+            {
+                closest = new Tuple<float, float>(p1.Item1 + t * dx, p1.Item2 + t * dy);
+                dx = pt.Item1 - closest.Item1;
+                dy = pt.Item2 - closest.Item2;
+            }
+
+            return Math.Sqrt(dx * dx + dy * dy);
+        }
+
     }
 }
