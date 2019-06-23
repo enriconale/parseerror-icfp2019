@@ -64,6 +64,20 @@ namespace ICFP2019
             return new Point(x, y);
         }
 
+        public Point relativeRotPosition(Point p)
+        {
+            int x = 0; 
+            int y = 0;
+            switch (Dir)
+            {
+                case Dir.E: x = -p.x; y = -p.y; break;
+                case Dir.N: x = p.y; y = p.x; break;
+                case Dir.W: x = p.x; y = p.y; break;
+                case Dir.S: x = -p.y; y = p.x; break;
+            }
+            return new Point(x, y);
+        }
+
         private List<Point> ShortestPath(Point dst)
         {
             List<Point> r = new List<Point>();

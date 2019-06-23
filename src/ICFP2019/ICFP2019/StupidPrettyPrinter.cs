@@ -37,6 +37,10 @@ namespace ICFP2019
                         }
                         file.Write(tileText);
                     }
+                    else if (parsedMap[j, i] == Tile.Filled)
+                    {
+                        file.Write("F");
+                    }
                     else
                     {
                         file.Write("█");
