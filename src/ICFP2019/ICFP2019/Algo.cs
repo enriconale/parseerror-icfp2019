@@ -53,7 +53,7 @@ namespace ICFP2019
                 wrappies.Add(new Wrappy(w.Loc));
                 
             }
-            w.executeds.Add(a);
+            w.ActionHistory.Add(a);
             updateStatus(w);
         }
 

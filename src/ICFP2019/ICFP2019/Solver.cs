@@ -49,31 +49,15 @@ namespace ICFP2019
             {
                 foreach (var w in currentStatus.wrappies)
                 {
-
+                    //w.LastAction 
                     w.updateDistMap(currentStatus.map, currentStatus.goals);
                     Wrappy.PriPath pp = w.BestShortestPath();
                     Action a = null;
                     currentStatus.execute(a, w);
-                    w.ActionHistory.Add(a);
                 }
             }
         }
 
-
-
-        public void solveStep()
-        {
-            foreach (var w in currentStatus.wrappies)
-            {
-                //w.updateDistMap(s.Map);
-            }
-            foreach (var w in currentStatus.wrappies)
-            {
-                var a = w.nextAction();
-                currentStatus.execute(a, w);
-            }
-
-        }
 
 
     }
