@@ -86,6 +86,7 @@ namespace ICFP2019.Dijkstra
         {
             List<PriGoal> priGoals = new List<PriGoal>();
             Map<int> distMap = new Map<int>(map.W, map.H, UNREACHABLE);
+            distMap[w.Loc] = 0;
             //int min = int.MaxValue;
             var crossingEdges = new MinHeap<int, int>(N);
             var minVertices = new bool[N];

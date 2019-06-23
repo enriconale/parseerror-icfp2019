@@ -66,6 +66,11 @@ namespace ICFP2019
             }
         }
 
+        public override string ToString()
+        {
+            return String.Format("({0}, {1})", x, y);
+        }
+
         public Point(Goal.GoTo GoTo)
         {
             this.x = GoTo.Item1;
