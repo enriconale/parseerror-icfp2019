@@ -97,25 +97,43 @@ namespace ICFP2019
 
         private bool isVisible(Point p1, Point p2)
         {
-            var x0 = Math.Min(p1.x, p2.x);
-            var y0 = Math.Min(p1.y, p2.y);
-            var x1 = Math.Max(p1.x, p2.x);
-            var y1 = Math.Max(p1.y, p2.y);
-            for (int x = x0; x <= x1; x++)
+            int x0 = Math.Min(p1.x, p2.x),
+                y0 = Math.Min(p1.y, p2.y),
+                x1 = Math.Max(p1.x, p2.x),
+                y1 = Math.Max(p1.y, p2.y);
+            Point q1, q2, s;
+            if (Math.Abs(x0 - x1) > Math.Abs(y0 - y1))
             {
-                for (int y = y0; y <= y1; y++)
+                for (int x = x0 + 1; x < x1; ++x)
                 {
-                    if (map[x, y].Equals(Tile.Obstacle))
+                    q1 = new Point(x, y0);
+                    q2 = new Point(x, y1);
+                    if (Point.FindIntersection(p1, p2, q1, q2, out s))
                     {
-                        var dist = Point.FindDistanceToSegment(
-                            new Point(x, y), p1, p2
-                            );
-                        if (Math.Round(dist*dist,1) < 0.5)
+                        if (map[s.x, s.y] == Tile.Obstacle)
+                        {
                             return false;
+                        }
                     }
                 }
+                return true;
             }
-            return true;//TODO implement visibility
+            else
+            {
+                for (int y = y0 +1; y < y1; ++y)
+                {
+                    q1 = new Point(x0, y);
+                    q2 = new Point(x1, y);
+                    if (Point.FindIntersection(p1, p2, q1, q2, out s))
+                    {
+                        if (map[s.x, s.y] == Tile.Obstacle)
+                        {
+                            return false;
+                        }
+                    }
+                }
+                return true;
+            }
         }
 
         public bool isSolved()
