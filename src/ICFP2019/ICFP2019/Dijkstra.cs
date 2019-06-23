@@ -18,6 +18,8 @@ namespace ICFP2019.Dijkstra
 
     public class Graph
     {
+        public static readonly int UNREACHABLE = Int32.MaxValue;
+        public static readonly int MAX_GOALS = 10;
         private List<Vertex> vertices = new List<Vertex>();
         private Map<Tile> map;
 
@@ -37,7 +39,7 @@ namespace ICFP2019.Dijkstra
             return new Edge
             {
                 V2 = idAt(x, y),
-                Length = (short)(map[x, y] == Tile.Obstacle ? short.MaxValue : 1)
+                Length = (short)(map[x, y] == Tile.Obstacle ? UNREACHABLE : 1)
             };
         }
 
@@ -67,20 +69,28 @@ namespace ICFP2019.Dijkstra
             }
         }
 
-
-        public Map<int> CalculateMap(Point p)
+        public struct Result
         {
-            return CalculateMap(vertices[idAt(p.x, p.y)]);
+            public Map<int> distMap;
+            public List<PriGoal> priGoals;
+        }
+
+        public Result CalculateMap(Wrappy w, List<Goal> goals)
+        {
+            Point p = w.Loc;
+            return CalculateMap(vertices[idAt(p.x, p.y)], w, goals);
         }
 
 
-        private Map<int> CalculateMap(Vertex v)
+        private Result CalculateMap(Vertex v, Wrappy w, List<Goal> goals)
         {
+            List<PriGoal> priGoals = new List<PriGoal>();
             Map<int> distMap = new Map<int>(map.W, map.H);
             //int min = short.MaxValue;
             var crossingEdges = new MinHeap<short, short>(N);
             var minVertices = new bool[N];
             minVertices[v.Id] = true;
+            int max_goals = Math.Min(MAX_GOALS, goals.Count);
 
             foreach (var outgoingEdge in v.OutgoingEdges)
             {
@@ -94,8 +104,25 @@ namespace ICFP2019.Dijkstra
 
                 short v2 = minEdge.Key;
                 var newVertex = vertices[v2];
-                distMap[v2 % map.W, v2 / map.W] = minEdge.Value;
-
+                int X = v2 % map.W, Y = v2 / map.W;
+                distMap[X, Y] = minEdge.Value;
+                // cerca il GoTo più vicino 
+                int i;
+                if ((i = goals.FindIndex((g) =>
+                {
+                    if (g.IsGoTo)
+                    {
+                        Goal.GoTo goTo = (Goal.GoTo)g;
+                        int x = goTo.Item1, y = goTo.Item2;
+                        return x == X && y == Y;
+                    }
+                    else return false;
+                })) >= 0)
+                {
+                    priGoals.Add(new PriGoal { goal = goals[i], pri = minEdge.Value });
+                    if (priGoals.Count >= max_goals)
+                        new Result { distMap = distMap, priGoals = priGoals };
+                }
 
                 minVertices[v2] = true;
                 //if (minEdge.Value < min)
@@ -123,7 +150,7 @@ namespace ICFP2019.Dijkstra
                 }
             }
 
-            return distMap;
+            return new Result { distMap = distMap, priGoals = priGoals };
         }
 
     }
