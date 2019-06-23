@@ -14,12 +14,14 @@ namespace ICFP2019
 
         public Solver(Status startingState) {
             this.s = startingState;
+            this.solution = new List<List<Action>>();
         }
 
         public Solver(Status startingState, List<List<Action>> wrappiesStartingActions)
         {
             this.s = startingState;
             this.wrappiesStartingActions = wrappiesStartingActions;
+            this.solution = new List<List<Action>>();
         }
 
         public void solve() {

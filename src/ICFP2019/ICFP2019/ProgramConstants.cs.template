@@ -2,7 +2,16 @@ namespace ICFP2019
 {
     partial class Program
     {
-        private const string ProblemPath = "";
-        private const string StupidPrinterOutputPath = "";
+        private const string SingleProblemPath =
+            "";
+        
+        private const string StupidPrinterOutputPath =
+            "";
+        
+        private const bool LaunchMassiveExecution = false;
+
+        private const string MassiveProblemsFolderPath = "";
+
+        private const int MaxProblemsToExecute = 10;
     }
 }
