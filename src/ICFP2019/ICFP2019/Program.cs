@@ -1,9 +1,7 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace ICFP2019
@@ -12,7 +10,6 @@ namespace ICFP2019
     {
         public static void Main(string[] args)
         {
-
             if (LaunchMassiveExecution)
             {
                 SolveProblemsInFolder();
@@ -37,11 +34,13 @@ namespace ICFP2019
                 {
                     tempSolutions = ParseTempSolution(problemPath, problemTempSolutions);
                 }
+
                 Status status = Parser.parseProblem(problem);
                 if (!"".Equals(StupidPrinterOutputPath))
                 {
                     StupidPrettyPrinter.PrintParsedMap(status, StupidPrinterOutputPath);
                 }
+
                 Solver solver = new Solver(status, tempSolutions);
                 solver.Init();
                 //solver.solve();
@@ -56,17 +55,14 @@ namespace ICFP2019
 
             foreach (string problemFile in problemFiles)
             {
-                string filename = problemFile.Substring(System.IO.Path.PathSeparator).Last().ToString();
+                string filename = problemFile.Substring(Path.PathSeparator).Last().ToString();
                 filename = filename.Substring(0, filename.Length - 4);
                 if (problemsExecuted >= MaxProblemsToExecute)
                 {
                     break;
                 }
 
-                Task.Run(() =>
-                {
-                    SolveSingleProblem(MassiveProblemsFolderPath + System.IO.Path.PathSeparator + filename);
-                });
+                Task.Run(() => { SolveSingleProblem(MassiveProblemsFolderPath + Path.PathSeparator + filename); });
                 problemsExecuted++;
             }
         }
@@ -97,16 +93,18 @@ namespace ICFP2019
 
                         j++;
 
-                        action = tmpSolutionString.Substring(i, j-i);
+                        action = tmpSolutionString.Substring(i, j - i);
                         i = j;
                     }
                     else
                     {
                         i++;
                     }
+
                     currentActions.Add(Parser.parseAction(action));
                 }
             }
+
             tempSolutions.Add(currentActions);
 
             return tempSolutions;
@@ -114,22 +112,45 @@ namespace ICFP2019
 
         private static void PrintSolution(string problemPath, string problemSolution, Solver solver)
         {
-            System.IO.StreamWriter file =
-                new System.IO.StreamWriter(problemPath + problemSolution, false);
+            StreamWriter file =
+                new StreamWriter(problemPath + problemSolution, false);
             List<List<Action>> solution = solver.solution;
-            foreach (List<Action> sol in solution)
+            int solutionNumber = solution.Count();
+            for (int i = 0; i < solutionNumber; i++)
             {
+                List<Action> sol = solution[i];
                 foreach (Action action in sol)
                 {
-                    //TODO write correct actions
-                    file.Write("$");
+                    if (action.IsB || action.IsR)
+                    {
+                        string strAction = "";
+                        if (action.IsB)
+                        {
+                            Action.B b = (Action.B) action;
+                            strAction = "B(" + b.Item1 + "," + b.Item2 + ")";
+                        }
+                        else
+                        {
+                            Action.R r = (Action.R) action;
+                            strAction = "R(" + r.Item1 + "," + r.Item2 + ")";
+                        }
+                        file.Write(strAction);
+                    }
+                    else
+                    {
+                        file.Write(action.ToString());
+                    }
                 }
-                //TODO do not append # after last action
-                file.Write("#");
+
+                if (i < solutionNumber - 1)
+                {
+                    file.Write("#");
+                }
             }
+
             file.Close();
         }
-        
+
         private static string[] GetFilesInFolder(string folderPath)
         {
             var files = Directory.GetFiles(folderPath);
