@@ -27,7 +27,7 @@ namespace ICFP2019
                 }
             }
             int totalTiles = currentFilledTiles + currentEmptyTiles;
-            int percentFilled = currentFilledTiles / totalTiles * 100;
+            double percentFilled = Math.Round((float)currentFilledTiles / totalTiles * 100);
             System.Console.Out.WriteLine("====================================================================================================");
             System.Console.Out.WriteLine("Totale tiles        : " + totalTiles + " di cui " + currentFilledTiles + " riempite (" + percentFilled + "%)");
             if (currentStatus.collectedBoosters != null)
