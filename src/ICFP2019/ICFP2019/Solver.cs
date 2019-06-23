@@ -12,10 +12,9 @@ namespace ICFP2019
         private List<List<Action>> wrappiesStartingActions;// TODO ... not used
         public List<List<Action>> solution;
 
-        public Solver(Status status0)
+        public Solver(Status status0) : this(status0, new List<List<Action>>())
         {
-            this.status = status0;
-            this.solution = new List<List<Action>>();
+
         }
 
         public Solver(Status status0, List<List<Action>> wrappiesStartingActions)
@@ -23,10 +22,7 @@ namespace ICFP2019
             this.status = status0;
             this.wrappiesStartingActions = wrappiesStartingActions;
             this.solution = new List<List<Action>>();
-        }
 
-        public void Init()
-        {
             for (int i = 0; i < wrappiesStartingActions.Count; i++)
             {
                 var wacs = wrappiesStartingActions[i];
