@@ -89,6 +89,5 @@ namespace ICFP2019
             return files;
         }
 
-        public static void check
     }
 }
