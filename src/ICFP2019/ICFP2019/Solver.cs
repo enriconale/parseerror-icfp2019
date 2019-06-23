@@ -30,8 +30,10 @@ namespace ICFP2019
                 {
                     if (status.wrappies.Count <= i) throw new Exception("Malformed starting action: Using a not spawned wrappy");
                     status.execute(wac, status.wrappies[i]);
+                    StupidPrettyPrinter.PrintCurrentSemiFilledMap(status);
                 }
             }
+            StatisticalPrettyPrinter.printStats(status);
         }
 
         public void Loop()
