@@ -65,7 +65,7 @@ namespace ICFP2019
         Manipulator, FastWheels, Teleport, Drill, Cloning, CloningPlatform
     }
 
-    public class Wrappy
+    public partial class Wrappy
     {
         public Point loc;
         public Dir dir;
@@ -122,7 +122,10 @@ namespace ICFP2019
     public struct PriGoal
     {
         public Goal goal;
-        public int pri;
+        //public Dictionary<Wrappy, int> wrappyPriority;
+        //public int pri;
+        public int distance;
+        public Wrappy aw;
     }
 
     public partial class Status

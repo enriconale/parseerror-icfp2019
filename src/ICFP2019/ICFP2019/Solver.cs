@@ -49,17 +49,11 @@ namespace ICFP2019
             {
                 w.updateDistMap(s.Map);
             }
-
-            
-
-            // 1 AGGIORNAMENTO STATO WRAPPIES {MAPPA DISTANZE} 
-            // 2 PER OGNI WRAPPY RICALCOLO OBBIETTIV
-            // 3 PER OGNI OBBIETTIVO OTTENERE LE MOSSE
-            // 4 AGGREGARE LE MOSSE PER PRIORITA
-            // 5 PRENDERE LA MOSSA A PRIORITA'' PIU ALTA
-            // 6 ESEGUIRE LA MOSSA
-            // 7 AGGIORNARE LA MAPPA GLOBALE (sottointeso nella execute)
-
+            foreach (var w in s.wrappies)
+            {
+                var a = w.nextAction();
+                s.execute(a, w);
+            }
 
         }
 
