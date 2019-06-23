@@ -29,6 +29,20 @@ namespace ICFP2019
             get => this.s;
         }
 
+        public void Init() {
+            for (int i = 0; i < wrappiesStartingActions.Count; i++)
+            {
+                var wacs = wrappiesStartingActions[i];
+                foreach (var wac in wacs)
+                {
+                    if (s.wrappies.Count <= i) throw new Exception("Malformed starting action: Using a not spawned wrappy");
+                    s.execute(wac, s.wrappies[i]);
+                }
+            }
+        }
+
+
+
         /**
          * return if solved
          */
