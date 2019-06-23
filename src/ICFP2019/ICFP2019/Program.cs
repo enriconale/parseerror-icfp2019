@@ -45,7 +45,7 @@ namespace ICFP2019
 
                 Solver solver = new Solver(status, tempSolutions);
                 solver.Loop();
-                PrintSolution(problemPath, problemSolution, solver);
+                PrintSolution(problemPath, problemSolution, status);
             }
         }
 
@@ -111,16 +111,16 @@ namespace ICFP2019
             return tempSolutions;
         }
 
-        private static void PrintSolution(string problemPath, string problemSolution, Solver solver)
+        private static void PrintSolution(string problemPath, string problemSolution, Status status)
         {
             StreamWriter file =
                 new StreamWriter(problemPath + problemSolution, false);
-            List<List<Action>> solution = solver.solution;
-            int solutionNumber = solution.Count();
-            for (int i = 0; i < solutionNumber; i++)
+            List<Wrappy> wrappies = status.wrappies;
+            int wrappiesCount = wrappies.Count();
+            for (int i = 0; i < wrappiesCount; i++)
             {
-                List<Action> sol = solution[i];
-                foreach (Action action in sol)
+                List<Action> wrappiesActions = wrappies[i].ActionHistory;
+                foreach (Action action in wrappiesActions)
                 {
                     if (action.IsB || action.IsR)
                     {
@@ -143,7 +143,7 @@ namespace ICFP2019
                     }
                 }
 
-                if (i < solutionNumber - 1)
+                if (i < wrappiesCount - 1)
                 {
                     file.Write("#");
                 }

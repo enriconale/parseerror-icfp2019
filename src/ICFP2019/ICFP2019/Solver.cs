@@ -10,7 +10,6 @@ namespace ICFP2019
     {
         private Status status;
         private List<List<Action>> wrappiesStartingActions;// TODO ... not used
-        public List<List<Action>> solution;
 
         public Solver(Status status0) : this(status0, new List<List<Action>>())
         {
@@ -21,12 +20,10 @@ namespace ICFP2019
         {
             this.status = status0;
             this.wrappiesStartingActions = wrappiesStartingActions;
-            this.solution = new List<List<Action>>();
-            this.solution.Add(new List<Action>());
 
-            for (int i = 0; i < wrappiesStartingActions.Count; i++)
+            for (int i = 0; i < this.wrappiesStartingActions.Count; i++)
             {
-                var wacs = wrappiesStartingActions[i];
+                var wacs = this.wrappiesStartingActions[i];
                 foreach (var wac in wacs)
                 {
                     if (status.wrappies.Count <= i) throw new Exception("Malformed starting action: Using a not spawned wrappy");
@@ -76,7 +73,6 @@ namespace ICFP2019
                         }
                     }
                     status.execute(a, w);
-                    solution[0].Add(a);
                     status.CalculateGoals();
                 }
             }

@@ -108,7 +108,8 @@ namespace ICFP2019
                 {
                     q1 = new Point(x, y0);
                     q2 = new Point(x, y1);
-                    s = Point.FindIntersection(p1, p2, q1, q2);
+                    // ERA COSÌ -> s = Point.FindIntersection(p1, p2, q1, q2);
+                    Point.FindIntersection(p1, p2, q1, q2, out s);
                     {
                         if (map.validCoordinate(s) && map[s.x, s.y] == Tile.Obstacle)
                         {
@@ -123,7 +124,8 @@ namespace ICFP2019
                 {
                     q1 = new Point(x0, y);
                     q2 = new Point(x1, y);
-                    s = Point.FindIntersection(p1, p2, q1, q2);
+                    // ERA COSÌ -> s = Point.FindIntersection(p1, p2, q1, q2);
+                    Point.FindIntersection(p1, p2, q1, q2, out s);
                     s.y -= 1;
                     if (map.validCoordinate(s) && map[s.x, s.y] == Tile.Obstacle)
                     {
