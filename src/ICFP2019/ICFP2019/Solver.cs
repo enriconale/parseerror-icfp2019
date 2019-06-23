@@ -25,11 +25,6 @@ namespace ICFP2019
             this.solution = new List<List<Action>>();
         }
 
-        //public Status CurrentStatus
-        //{
-        //    get => this.currentStatus;
-        //}
-
         public void Init()
         {
             for (int i = 0; i < wrappiesStartingActions.Count; i++)
@@ -57,9 +52,22 @@ namespace ICFP2019
                             a = Action.C;
                         else if (status.collectedBoosters.Contains(Booster.FastWheels))
                             a = Action.F;
+                        else if (status.collectedBoosters.Contains(Booster.Manipulator))
+                        {
+                            w.Manips.Sort((p1, p2) => -(p1.y - p2.y));
+                            a = Action.NewB(w.Manips[0].x, w.Manips[0].y + 1);
+                        }
                     }
-                    w.updateDistMap(status.map, status.goals);
-                    Wrappy.PriPath pp = w.BestShortestPath();
+                    if (a == null)
+                    {
+                        w.updateDistMap(status.map, status.goals);
+                        Wrappy.PriPath pp = w.BestShortestPath();
+                        Point d = pp.path[0];
+                        if (d.x == w.Loc.x - 1 && d.y == w.Loc.y) a = Action.A;
+                        if (d.x == w.Loc.x + 1 && d.y == w.Loc.y) a = Action.D;
+                        if (d.y == w.Loc.y - 1 && d.x == w.Loc.x) a = Action.S;
+                        if (d.y == w.Loc.y + 1 && d.x == w.Loc.x) a = Action.W;
+                    }
                     status.execute(a, w);
                 }
             }
