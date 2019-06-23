@@ -32,6 +32,11 @@ namespace ICFP2019
                     status.execute(wac, status.wrappies[i]);
                 }
             }
+            StatisticalPrettyPrinter.printStats(status);
+            foreach (Wrappy wrappy in status.wrappies)
+            {
+                DijkstraPrettyPrinter.printDijkstraMap(status, wrappy);
+            }
         }
 
         public void Loop()
@@ -65,6 +70,8 @@ namespace ICFP2019
                         if (d.y == w.Loc.y + 1 && d.x == w.Loc.x) a = Action.W;
                     }
                     status.execute(a, w);
+                    StatisticalPrettyPrinter.printStats(status);
+                    DijkstraPrettyPrinter.printDijkstraMap(status, w);
                 }
             }
         }
