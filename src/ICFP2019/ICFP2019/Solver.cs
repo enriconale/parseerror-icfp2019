@@ -52,6 +52,7 @@ namespace ICFP2019
 
                     w.updateDistMap(currentStatus.map, currentStatus.goals);
                     Wrappy.PriPath pp = w.BestShortestPath();
+                    Action a = null;
                     currentStatus.execute(a, w);
                     w.ActionHistory.Add(a);
                 }
