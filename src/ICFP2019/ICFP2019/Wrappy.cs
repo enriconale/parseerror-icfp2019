@@ -30,6 +30,15 @@ namespace ICFP2019
         public Dir Dir { get => dir; set => dir = value; }
         public List<Point> Manips { get => manips; set => manips = value; }
         public List<Action> ActionHistory { get => actionHistory; set => actionHistory = value; }
+
+        public Action LastAction
+        {
+            get
+            {
+                return ActionHistory.Count == 0 ? null : ActionHistory.Last();
+            }
+        }
+
         public Map<int> DistMap => distMap;
 
         public void rotateClockwise()
