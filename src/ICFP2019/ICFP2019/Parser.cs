@@ -144,6 +144,12 @@ namespace ICFP2019
             }
         }
 
+        public Point(Goal.GoTo GoTo)
+        {
+            this.x = GoTo.Item1;
+            this.y = GoTo.Item2;
+        }
+
         public bool isCollinear(Point other)
         {
             return x == other.x || y == other.y;
@@ -165,9 +171,19 @@ namespace ICFP2019
             return hashCode;
         }
 
+        public int l1norm()
+        {
+            return Math.Abs(this.x) + Math.Abs(this.y);
+        }
+
         public static Point operator+(Point p1, Point p2)
         {
             return new Point(p1.x + p2.x, p1.y + p2.y);
+        }
+
+        public static Point operator-(Point p1, Point p2)
+        {
+            return new Point(p1.x - p2.x, p1.y - p2.y);
         }
 
         public static bool operator==(Point p1, Point p2)

@@ -1,20 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace ICFP2019.Properties
+namespace ICFP2019.ShortestTileAlgo
 {
     public class ShortestTileAlgo
     {
         private Map<Tile> map;
         public static readonly int UNREACHABLE = Int32.MaxValue;
+        public static readonly int MAX_GOALS = 10;
 
         public ShortestTileAlgo(Map<Tile> map)
         {
             this.map = map;
         }
 
-        private int minAround(Map<int> distMap, Point p)
+        private int minDistAround(Map<int> distMap, Point p)
         {
-            int min = Int32.MaxValue;
+            int min = UNREACHABLE;
             if (p.x > 0 && distMap[p.x - 1, p.y] < min) min = distMap[p.x - 1, p.y];
             if (p.x < map.W && distMap[p.x + 1, p.y] < min) min = distMap[p.x + 1, p.y];
             if (p.y > 0 && distMap[p.x, p.y - 1] < min) min = distMap[p.x, p.y - 1];
@@ -22,17 +24,26 @@ namespace ICFP2019.Properties
             return min;
         }
 
-        private Map<int> calculateMap(Wrappy w)
+        public ICFP2019.Dijkstra.Graph.Result calculateMap(Wrappy w, List<Goal> goals)
         {
             Map<int> distMap = new Map<int>(map.W, map.H);
+            int max_goals = Math.Min(MAX_GOALS, goals.Count);
 
             distMap.fillWith(UNREACHABLE);
             distMap[w.Loc] = 0;
+            // sort goals by distance from w and then only keep the first max_goals
+            goals.Sort((Goal g1, Goal g2) =>
+            {
+                return (new Point((Goal.GoTo)g1) - w.Loc).l1norm()
+                     - (new Point((Goal.GoTo)g2) - w.Loc).l1norm();
+            });
+            List<Goal> bestGoals = goals.GetRange(0, max_goals);
 
             Point p = new Point();
+            int R = (w.Loc - new Point((Goal.GoTo)bestGoals[bestGoals.Count - 1])).l1norm();
 
             // cycle through all radii
-            for (int r = 1; r < Math.Max(map.W, map.H); ++r)
+            for (int r = 1; r <= R; ++r)
             {
                 // cycle through rhombus (i.e. L-1 circle) side length, coordinates
                 // are computed as (i, r-i), depends on which side (have l-1 distance
@@ -58,11 +69,26 @@ namespace ICFP2019.Properties
                         p.x = w.Loc.x + i * xSign;
                         p.y = w.Loc.y + (r - i) * ySign;
                         if (map.validCoordinate(p) && map[p] != Tile.Obstacle)
-                            distMap[p] = minAround(distMap, p) + 1;
+                        {
+                            distMap[p] = minDistAround(distMap, p) + 1;
+                        }
                     }
                 }
             }
-            return distMap;
+
+            List<PriGoal> priGoals = new List<PriGoal>();
+            foreach (Goal goal in bestGoals)
+            {
+                priGoals.Add(new PriGoal {
+                    goal = goal,
+                    pri = distMap[new Point((Goal.GoTo)goal)]
+                });
+            }
+
+            return new ICFP2019.Dijkstra.Graph.Result { 
+                distMap = distMap,
+                priGoals = priGoals
+            };
         }
     }
 }
