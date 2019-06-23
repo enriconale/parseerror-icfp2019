@@ -6,12 +6,13 @@ namespace ICFP2019
 {
     public class StupidPrettyPrinter
     {
-        public static void printParsedMap(Map<Tile> parsedMap, List<KeyValuePair<Booster, Point>> boosters,
-            string printerPath)
+        public static void PrintParsedMap(Status currentStatus, string printerPath)
         {
             System.IO.StreamWriter file =
                 new System.IO.StreamWriter(printerPath, false);
             Dictionary<int, Dictionary<int, string>> mappedBoosters = new Dictionary<int, Dictionary<int, string>>();
+            Map<Tile> parsedMap = currentStatus.map;
+            List<KeyValuePair<Booster, Point>> boosters = currentStatus.boosters;
             foreach (var booster in boosters)
             {
                 Point boosterLocation = booster.Value;
