@@ -128,7 +128,7 @@ namespace ICFP2019
     public partial class Status
     {
         public Map<Tile> map;
-        public Wrappy wrappy;
+        public List<Wrappy> wrappies;
         public readonly List<KeyValuePair<Booster, Point>> boosters;
         public List<Booster> collectedBoosters = new List<Booster>();
         public List<PriGoal> prigoals;
@@ -136,13 +136,12 @@ namespace ICFP2019
         public Status(Map<Tile> map, Point wrappyLoc, List<KeyValuePair<Booster, Point>> boosters)
         {
             this.map = map;
-            this.wrappy = new Wrappy(wrappyLoc);
+            Wrappy firstWrappy = new Wrappy(wrappyLoc);
+            this.wrappies = new List<Wrappy>(new Wrappy[] {firstWrappy});
             this.boosters = boosters;
             // TODO: calculare i corner della mappa qui o ce li facciamo passare in construzione?
         }
 
         public Map<Tile> Map { get => map; set => map = value; }
-
     }
-
 }
