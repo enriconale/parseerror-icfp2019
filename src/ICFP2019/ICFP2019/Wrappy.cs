@@ -112,10 +112,11 @@ namespace ICFP2019
             return r;
         }
 
-        public void updateDistMap(Map<Tile> map, List<Goal> goals)
+        public void updateDistMap(Status status)
         {
+            Map<Tile> map = status.map;
             Graph graph = new Graph(map);
-            Graph.Result res = graph.CalculateMap(this, goals);
+            Graph.Result res = graph.CalculateMap(this, status);
             distMap = res.distMap;
             priGoals = res.priGoals;
         }
@@ -154,9 +155,11 @@ namespace ICFP2019
             List<Candidate> S = new List<Candidate>();
             List<Candidate> E = new List<Candidate>();
             List<Candidate> W = new List<Candidate>();
+            Console.Write("wrapper goals: " );
             foreach (var priGoal in priGoals)
             {
                 Goal.GoTo goTo = (Goal.GoTo)priGoal.goal;
+                Console.Write(new Point(goTo.Item1, goTo.Item2) + " ");
                 List<Point> path = ShortestPath(new Point(goTo.Item1, goTo.Item2));
                 Point p1 = path[0];
                 Candidate c = new Candidate { priGoal = priGoal, path = path };
@@ -165,7 +168,7 @@ namespace ICFP2019
                 if (p1.y == Loc.y - 1 && p1.x == Loc.x) S.Add(c);
                 if (p1.y == Loc.y + 1 && p1.x == Loc.x) N.Add(c);
             }
-
+            Console.WriteLine("");
             double pN = priOfCandidates(N);
             double pS = priOfCandidates(S);
             double pE = priOfCandidates(E);

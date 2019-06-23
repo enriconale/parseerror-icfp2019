@@ -75,15 +75,16 @@ namespace ICFP2019.Dijkstra
             public List<PriGoal> priGoals;
         }
 
-        public Result CalculateMap(Wrappy w, List<Goal> goals)
+        public Result CalculateMap(Wrappy w, Status status)
         {
             Point p = w.Loc;
-            return CalculateMap(vertices[idAt(p.x, p.y)], w, goals);
+            return CalculateMap(vertices[idAt(p.x, p.y)], w, status);
         }
 
 
-        private Result CalculateMap(Vertex v, Wrappy w, List<Goal> goals)
+        private Result CalculateMap(Vertex v, Wrappy w, Status status)
         {
+            List<Goal> goals = status.goals;
             List<PriGoal> priGoals = new List<PriGoal>();
             Map<int> distMap = new Map<int>(map.W, map.H, UNREACHABLE);
             distMap[w.Loc] = 0;
@@ -118,6 +119,12 @@ namespace ICFP2019.Dijkstra
                         {
                             Goal.GoTo goTo = (Goal.GoTo)g;
                             int x = goTo.Item1, y = goTo.Item2;
+                            if (!(status.collectedBoosters.Contains(Booster.Cloning)
+                               && status.boosters.Exists((kvp) =>
+                                    kvp.Value.x == x
+                                    && kvp.Value.y == y
+                                    && kvp.Key == Booster.CloningPlatform)))
+                                return false;
                             return x == X && y == Y;
                         }
                         else return false;

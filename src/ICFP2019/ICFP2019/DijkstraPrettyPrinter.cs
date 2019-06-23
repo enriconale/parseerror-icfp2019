@@ -16,6 +16,7 @@ namespace ICFP2019
             }
             for (int i = parsedMap.H - 1; i >= 0; i--)
             {
+                System.Console.Write(i % 10 + " ");
                 for (int j = 0; j < parsedMap.W; j++)
                 {
                     string s = ".";
@@ -45,6 +46,10 @@ namespace ICFP2019
                 }
                 System.Console.Out.WriteLine("");
             }
+            System.Console.Out.Write ("  ");
+            for (int i = 0; i < parsedMap.W; ++i)
+                System.Console.Out.Write(i % 10);
+            System.Console.Out.WriteLine("");
             foreach (var a in wrappy.ActionHistory)
                 System.Console.Out.Write(a);
             System.Console.Out.WriteLine("");
