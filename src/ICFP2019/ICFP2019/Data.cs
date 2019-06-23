@@ -65,6 +65,34 @@ namespace ICFP2019
         {
             return (p.x >= 0 && p.x < W && p.y >= 0 && p.y < h);
         }
+
+        public bool isCorner(Point p, T empty) {
+            return isCorner(p.x, p.y, empty);
+        }
+
+        public bool isCorner(int x, int y, T empty) {
+            return
+                isNotEmpty(x - 1, y, empty) && isNotEmpty(x, y + 1, empty) ||
+                isNotEmpty(x + 1, y, empty) && isNotEmpty(x, y + 1, empty) ||
+                isNotEmpty(x, y - 1, empty) && isNotEmpty(x + 1, y, empty) ||
+                isNotEmpty(x, y - 1, empty) && isNotEmpty(x - 1, y, empty)
+                ;
+        }
+
+        public int countAround(int x, int y, T empty)
+        { 
+            return countNotEmpty(x - 1, y, empty) + countNotEmpty(x + 1, y, empty) + countNotEmpty(x, y-1, empty) + countNotEmpty(x, y+1, empty);
+        }
+
+        private int countNotEmpty(int x, int y, T empty)
+        {
+            return (this[x - 1, y].Equals(empty)) ? 0 : 1;
+        }
+
+        private bool isNotEmpty(int x, int y, T empty)
+        {
+            return this[x - 1, y].Equals(empty);
+        }
     }
 
     public enum Dir
