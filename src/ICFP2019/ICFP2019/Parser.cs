@@ -59,7 +59,8 @@ namespace ICFP2019
                 throw new Exception("Parsing unsupported Action");
         }
 
-        public static Status parseProblem(String problem) {
+        public static Status parseProblem(String problem)
+        {
             var problemElements = problem.Split('#');
             var map = Parser.parseMap(problemElements[0], problemElements[2].Split(';').ToList());
             var status = new Status(map, new Point(problemElements[1].Substring(1, problemElements[1].Length - 2)), parseBoosters(problemElements[3]));
@@ -67,7 +68,8 @@ namespace ICFP2019
             return status;
         }
 
-        private static List<KeyValuePair<Booster, Point>> parseBoosters(String boosters){
+        private static List<KeyValuePair<Booster, Point>> parseBoosters(String boosters)
+        {
             var result = new List<KeyValuePair<Booster, Point>>();
             if ("".Equals(boosters))
             {
@@ -103,22 +105,24 @@ namespace ICFP2019
                     default:
                         throw new Exception("Unidetified booster");
                 }
-                result.Add(new KeyValuePair<Booster, Point>(bt,point));
+                result.Add(new KeyValuePair<Booster, Point>(bt, point));
             }
             return result;
         }
 
-        public static Point parsePoint(String p) {
+        public static Point parsePoint(String p)
+        {
             return new Point(Regex.Match(p, @"(\d+,\d+)").Value);
         }
 
-        public static Map<Tile> parseMap(String map, List<String> obstacles) {
+        public static Map<Tile> parseMap(String map, List<String> obstacles)
+        {
             parseLine(map);
             foreach (var ob in obstacles)
             {
                 parseLine(ob);
             }
-            var result = new Map<Tile>(maxX,maxY);
+            var result = new Map<Tile>(maxX, maxY);
             for (int x = 0; x < maxX; x++)
             {
                 for (int y = 0; y < maxY; y++)
@@ -134,122 +138,30 @@ namespace ICFP2019
             return result;
         }
 
-        public static void parseLine(String ls) {
+        public static void parseLine(String ls)
+        {
             if (ls.Length == 0) return;
             ls = ls.Substring(1, ls.Length - 2);
             var lines = Regex.Split(ls, @"\),\(");
-            var vertexes = lines.ToList().Select<String,Vertex>(x => { return new Vertex(x); }).ToList<Vertex>();
+            var vertexes = lines.ToList().Select<String, Vertex>(x => { return new Vertex(x); }).ToList<Vertex>();
             for (int i = 0; i < vertexes.Count; i++)
             {
                 var v = vertexes[i];
                 if (maxX < v.x) maxX = v.x;
                 if (maxY < v.y) maxY = v.y;
                 Line l;
-                if (i == vertexes.Count - 1 ) {
+                if (i == vertexes.Count - 1)
+                {
                     l = new Line(vertexes[i], vertexes[0]);
-                } else { 
-                    l = new Line(vertexes[i], vertexes[i+1]);
+                }
+                else
+                {
+                    l = new Line(vertexes[i], vertexes[i + 1]);
                 }
                 if (l.isVertical()) verticalLines.Add(l);
                 else horizontalLines.Add(l);
             }
         }
-
-
-
-    }
-
-    public class Point
-    {
-        public int x;
-        public int y;
-
-        public Point()
-        {
-            this.x = 0;
-            this.y = 0;
-        }
-
-        public Point(int x, int y)
-        {
-            this.x = x;
-            this.y = y;
-        }
-
-        public Point(Action a) {
-            if (a.IsW) { this.x = 0; this.y = 1; };
-            if (a.IsA) { this.x = -1; this.y = 0; };
-            if (a.IsD) { this.x = 1; this.y = 0; } ;
-            if (a.IsS) { this.x = 0; this.y = -1; };
-        }
-
-        public Point(String coords) {
-            var cs = coords.Split(',');
-            if (cs.Length != 2) throw new Exception("Point coords parsing error: " + coords);
-            try
-            {
-                this.x = int.Parse(cs[0]);
-                this.y = int.Parse(cs[1]);
-                //if float add 0.5
-            }
-            catch (Exception e) {
-                //e.Message = "Point coords parsing error: " + coords + " \n" + e.Message;
-                throw e;                
-            }
-        }
-
-        public Point(Goal.GoTo GoTo)
-        {
-            this.x = GoTo.Item1;
-            this.y = GoTo.Item2;
-        }
-
-        public bool isCollinear(Point other)
-        {
-            return x == other.x || y == other.y;
-        }
-
-        public override bool Equals(object obj)
-        {
-            var point = obj as Point;
-            return point != null &&
-                   x == point.x &&
-                   y == point.y;
-        }
-
-        public override int GetHashCode()
-        {
-            var hashCode = 1502939027;
-            hashCode = hashCode * -1521134295 + x.GetHashCode();
-            hashCode = hashCode * -1521134295 + y.GetHashCode();
-            return hashCode;
-        }
-
-        public int l1norm()
-        {
-            return Math.Abs(this.x) + Math.Abs(this.y);
-        }
-
-        public static Point operator+(Point p1, Point p2)
-        {
-            return new Point(p1.x + p2.x, p1.y + p2.y);
-        }
-
-	    public static Point operator-(Point p1, Point p2)
-        {
-            return new Point(p1.x - p2.x, p1.y - p2.y);
-        }
-
-        private static Point calculateMove(Action a)
-        {
-            Point m = null;//TODO use switch?
-            if (a.IsW) m = new Point(0, 1);
-            if (a.IsA) m = new Point(-1, 0);
-            if (a.IsD) m = new Point(1, 0);
-            if (a.IsS) m = new Point(0, -1);
-            return m;
-        }
-
     }
 
     public class Vertex : Point
@@ -259,17 +171,20 @@ namespace ICFP2019
         }
     }
 
-    class Line {
+    class Line
+    {
         public Vertex s;
         public Vertex e;
 
-        public Line(Vertex s, Vertex e) {
+        public Line(Vertex s, Vertex e)
+        {
             if (!s.isCollinear(e)) throw new Exception("Invalid Line Endpoints");
             this.s = s;
             this.e = e;
         }
 
-        public bool isVertical() {
+        public bool isVertical()
+        {
             return s.x == e.x;
         }
 
@@ -284,7 +199,8 @@ namespace ICFP2019
             return (s.x == e.x && p.x < s.x) || (s.y == e.y && p.y < s.y);
         }
 
-        private bool isBetween(float a, float b, float v) {
+        private bool isBetween(float a, float b, float v)
+        {
             return (a <= v && v < b) || (a > v && v >= b);
         }
 

@@ -10,12 +10,14 @@ namespace ICFP2019
         public void execute(Action a, Wrappy w)
         {
             Move(a, w);
-            if (w.remainingFastWheel > 0) {
+            if (w.remainingFastWheel > 0)
+            {
                 w.remainingFastWheel--;
                 updateStatus(w);
                 Move(a, w);
             }
-            if (w.remainingDrill > 0) {
+            if (w.remainingDrill > 0)
+            {
                 w.remainingDrill--;
                 //map[w.Loc.x, w.loc.y] = Tile.Filled; // already done by updatemap
             }
@@ -50,7 +52,7 @@ namespace ICFP2019
                 if (!collectedBoosters.Remove(Booster.Cloning)) throw new Exception("Missing Cloning boost");
                 if (boosters.Find((kvp) => kvp.Value.Equals(w.Loc)).Key != Booster.CloningPlatform) throw new Exception("Cloning not in a platform");
                 wrappies.Add(new Wrappy(w.Loc));
-                
+
             }
             w.ActionHistory.Add(a);
             updateStatus(w);
@@ -59,8 +61,8 @@ namespace ICFP2019
         private void Move(Action a, Wrappy w)
         {
             var newLoc = w.Loc + new Point(a);
-            if (map.isNotEmpty(newLoc, Tile.Empty)) return; // TOCHECK throwException? // NO, in case of fast wheel
-            else w.Loc += newLoc ;
+            if (!map.isNotEmpty(newLoc, Tile.Empty))  // TOCHECK throwException? // NO, in case of fast wheel
+                w.Loc += newLoc;
         }
 
 
@@ -69,10 +71,11 @@ namespace ICFP2019
             updateMap(w);
             // colleziona il booster se wrappy ci sta sopra
             int i = boosters.FindIndex((kvp) => kvp.Value.Equals(w.Loc));
-            if (i >= 0) {
+            if (i >= 0)
+            {
                 var b = boosters[i];
                 collectedBoosters.Add(b.Key);
-                if(!(b.Key == Booster.CloningPlatform)) boosters.RemoveAt(i);
+                if (!(b.Key == Booster.CloningPlatform)) boosters.RemoveAt(i);
             }
             // TODO: usare subito i booster semplici: fastwheel e manip
         }
@@ -83,7 +86,8 @@ namespace ICFP2019
             map[w.Loc] = Tile.Filled;
             foreach (Point p in w.Manips)
             {
-                if (map[w.absolutePosition(p)] == Tile.Empty && isVisible(w.Loc, w.absolutePosition(p)) ) { 
+                if (map[w.absolutePosition(p)] == Tile.Empty && isVisible(w.Loc, w.absolutePosition(p)))
+                {
                     map[w.absolutePosition(p)] = Tile.Filled;
                 }
             }
@@ -94,7 +98,8 @@ namespace ICFP2019
             return true;//TODO implement visibility
         }
 
-        public bool isSolved() {
+        public bool isSolved()
+        {
             for (int h = 0; h < map.H; h++)
             {
                 for (int w = 0; w < map.W; w++)
