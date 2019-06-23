@@ -125,6 +125,10 @@ namespace ICFP2019.Dijkstra
                                     && kvp.Value.y == y
                                     && kvp.Key == Booster.CloningPlatform))
                                 return false;
+                            if (w.remainingFastWheel > 0
+                                && (Math.Abs(w.Loc.x - x) % 2 == 1
+                                || Math.Abs(w.Loc.y - y) % 2 == 1))
+                                return false;
                             return x == X && y == Y;
                         }
                         else return false;

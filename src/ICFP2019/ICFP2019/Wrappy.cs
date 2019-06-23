@@ -155,7 +155,7 @@ namespace ICFP2019
             List<Candidate> S = new List<Candidate>();
             List<Candidate> E = new List<Candidate>();
             List<Candidate> W = new List<Candidate>();
-            Console.Write("wrapper goals: " );
+            Console.Write("wrappy " + Loc + " goals: " );
             foreach (var priGoal in priGoals)
             {
                 Goal.GoTo goTo = (Goal.GoTo)priGoal.goal;
