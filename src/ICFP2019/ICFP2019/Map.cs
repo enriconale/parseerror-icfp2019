@@ -90,7 +90,7 @@ namespace ICFP2019
 
         public bool isMovable(Point p, T obstacle)
         {
-            return !this[p.x,p.y].Equals(obstacle);
+            return validCoordinate(p) && !this[p.x,p.y].Equals(obstacle);
         }
 
         public bool isNotEmpty(int x, int y, T empty)
