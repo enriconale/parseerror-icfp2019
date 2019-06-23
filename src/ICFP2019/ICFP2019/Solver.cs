@@ -25,10 +25,10 @@ namespace ICFP2019
             this.solution = new List<List<Action>>();
         }
 
-        public Status CurrentStatus
-        {
-            get => this.currentStatus;
-        }
+        //public Status CurrentStatus
+        //{
+        //    get => this.currentStatus;
+        //}
 
         public void Init()
         {
@@ -45,26 +45,20 @@ namespace ICFP2019
 
         public void Loop()
         {
-
-        }
-
-
-
-        /**
-         * return if solved
-         */
-        public bool solve()
-        {
             while (!currentStatus.isSolved())
             {
-                //if (s.prigoals.Count == 0)
-                //{
-                //    return false;
-                //}
-                this.solveStep();
+                foreach (var w in currentStatus.wrappies)
+                {
+
+                    w.updateDistMap(currentStatus.map, currentStatus.goals);
+                    Wrappy.PriPath pp = w.BestShortestPath();
+                    currentStatus.execute(a, w);
+                    w.ActionHistory.Add(a);
+                }
             }
-            return true;
         }
+
+
 
         public void solveStep()
         {

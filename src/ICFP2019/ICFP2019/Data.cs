@@ -82,6 +82,7 @@ namespace ICFP2019
         private Point loc;
         private Dir dir;
         private List<Point> manips;
+        private List<Action> actionHistory = new List<Action>();
         private Map<int> distMap;
         public List<PriGoal> priGoals;
 
@@ -95,6 +96,7 @@ namespace ICFP2019
         public Point Loc { get => loc; set => loc = value; }
         public Dir Dir { get => dir; set => dir = value; }
         public List<Point> Manips { get => manips; set => manips = value; }
+        public List<Action> ActionHistory { get => actionHistory; set => actionHistory = value; }
 
         public void rotateClockwise()
         {
@@ -119,7 +121,7 @@ namespace ICFP2019
             return new Point(x, y);
         }
 
-        public List<Point> ShortestPath(Point dst)
+        private List<Point> ShortestPath(Point dst)
         {
             List<Point> r = new List<Point>();
             if (distMap[dst] == Graph.UNREACHABLE)
@@ -145,11 +147,6 @@ namespace ICFP2019
             Graph.Result res = graph.CalculateMap(this, goals);
             distMap = res.distMap;
             priGoals = res.priGoals;
-        }
-
-        public int DistTo(int x, int y)
-        {
-            return distMap[x, y];
         }
 
         public struct Candidate

@@ -44,7 +44,7 @@ namespace ICFP2019
             }
             if (a.IsR)//telepor
             {
-                throw new Exception("Telport not implemented yet");
+                throw new Exception("Teleport not implemented yet");
             }
             if (a.IsC)
             {
@@ -86,16 +86,6 @@ namespace ICFP2019
             {
                 map[w.absolutePosition(p)] = Tile.Filled;
             }
-        }
-
-        public Action computeAction(Goal g)
-        {
-            if (g.IsGoTo)
-            {
-                Goal.GoTo goTo = (Goal.GoTo) g;
-                int x = goTo.Item1, y = goTo.Item2;
-            }
-            return null;
         }
 
         public bool isSolved() {
