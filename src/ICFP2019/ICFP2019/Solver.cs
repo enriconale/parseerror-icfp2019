@@ -22,19 +22,32 @@ namespace ICFP2019
             this.wrappiesStartingActions = wrappiesStartingActions;
         }
 
-        public void solve() {
+        public Status S
+        {
+            get => this.s;
+        }
+
+        /**
+         * return if solved
+         */
+        public bool solve() {
             while (!s.isSolved())
             {
+                if (s.prigoals.Count == 0) {
+                    return false;
+                }
                 this.solveStep();
             }
+            return true;
         } 
 
         public void solveStep()
         {
-            foreach (var wrappy in s.wrappies)
+            foreach (var w in s.wrappies)
             {
-
+                w.updateDistMap(s.Map);
             }
+
             
 
             // 1 AGGIORNAMENTO STATO WRAPPIES {MAPPA DISTANZE} 
@@ -43,7 +56,7 @@ namespace ICFP2019
             // 4 AGGREGARE LE MOSSE PER PRIORITA
             // 5 PRENDERE LA MOSSA A PRIORITA'' PIU ALTA
             // 6 ESEGUIRE LA MOSSA
-            // 7 AGGIORNARE LA MAPPA GLOBALE
+            // 7 AGGIORNARE LA MAPPA GLOBALE (sottointeso nella execute)
 
 
         }
