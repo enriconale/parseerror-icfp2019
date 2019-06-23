@@ -42,7 +42,7 @@ namespace ICFP2019
                     StupidPrettyPrinter.printParsedMap(status.map, status.boosters, StupidPrinterOutputPath);
                 }
                 Solver solver = new Solver(status);
-                solver.solve();
+                //solver.solve();
                 printSolution(problemPath, problemSolution, solver);
             }
         }
