@@ -119,11 +119,11 @@ namespace ICFP2019.Dijkstra
                         {
                             Goal.GoTo goTo = (Goal.GoTo)g;
                             int x = goTo.Item1, y = goTo.Item2;
-                            if (!(status.collectedBoosters.Contains(Booster.Cloning)
+                            if (!status.collectedBoosters.Contains(Booster.Cloning)
                                && status.boosters.Exists((kvp) =>
                                     kvp.Value.x == x
                                     && kvp.Value.y == y
-                                    && kvp.Key == Booster.CloningPlatform)))
+                                    && kvp.Key == Booster.CloningPlatform))
                                 return false;
                             return x == X && y == Y;
                         }
