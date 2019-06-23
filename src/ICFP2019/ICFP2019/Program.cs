@@ -85,7 +85,6 @@ namespace ICFP2019
         private static string[] GetFilesInFolder(string folderPath)
         {
             var files = Directory.GetFiles(folderPath);
-
             return files;
         }
 

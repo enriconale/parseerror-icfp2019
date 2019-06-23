@@ -14,7 +14,10 @@ namespace ICFP2019
         private static int maxX = 0;
         private static int maxY = 0;
 
-
+        public static Action parseAction(String a)
+        {
+            return Action.A;
+        }
 
         public static Status parseProblem(String problem) {
             var problemElements = problem.Split('#');
