@@ -106,22 +106,25 @@ namespace ICFP2019.Dijkstra
                 var newVertex = vertices[v2];
                 int X = v2 % map.W, Y = v2 / map.W;
                 distMap[X, Y] = minEdge.Value;
-                // cerca il GoTo più vicino 
-                int i;
-                if ((i = goals.FindIndex((g) =>
+                if (minEdge.Value != 0)
                 {
-                    if (g.IsGoTo)
+                    // cerca il GoTo più vicino
+                    int i;
+                    if ((i = goals.FindIndex((g) =>
                     {
-                        Goal.GoTo goTo = (Goal.GoTo)g;
-                        int x = goTo.Item1, y = goTo.Item2;
-                        return x == X && y == Y;
+                        if (g.IsGoTo)
+                        {
+                            Goal.GoTo goTo = (Goal.GoTo)g;
+                            int x = goTo.Item1, y = goTo.Item2;
+                            return x == X && y == Y;
+                        }
+                        else return false;
+                    })) >= 0)
+                    {
+                        priGoals.Add(new PriGoal { goal = goals[i], pri = minEdge.Value });
+                        if (priGoals.Count >= max_goals)
+                            return new Result { distMap = distMap, priGoals = priGoals };
                     }
-                    else return false;
-                })) >= 0)
-                {
-                    priGoals.Add(new PriGoal { goal = goals[i], pri = minEdge.Value });
-                    if (priGoals.Count >= max_goals)
-                        return new Result { distMap = distMap, priGoals = priGoals };
                 }
 
                 minVertices[v2] = true;

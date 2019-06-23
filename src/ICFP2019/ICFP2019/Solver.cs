@@ -25,11 +25,6 @@ namespace ICFP2019
             this.solution = new List<List<Action>>();
         }
 
-        //public Status CurrentStatus
-        //{
-        //    get => this.currentStatus;
-        //}
-
         public void Init()
         {
             for (int i = 0; i < wrappiesStartingActions.Count; i++)
