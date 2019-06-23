@@ -34,13 +34,13 @@ namespace ICFP2019
             }
             if (a.IsF)
             {
-                if (!collectedBoosters.Remove(Booster.FastWheels)) throw new Exception("Missing fast whill boost");
-                w.remainingFastWheel = 50;
+                if (!collectedBoosters.Remove(Booster.FastWheels)) throw new Exception("Missing fast wheel boost");
+                w.remainingFastWheel += 50;
             }
             if (a.IsL)
             {
                 if (!collectedBoosters.Remove(Booster.Drill)) throw new Exception("Missing Drill boost");
-                w.remainingDrill = 30;
+                w.remainingDrill += 30;
 
             }
             if (a.IsR)//telepor
