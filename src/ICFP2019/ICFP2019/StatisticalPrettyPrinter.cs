@@ -38,8 +38,9 @@ namespace ICFP2019
                 System.Console.Out.WriteLine("Teleport raccolti   : " + currentStatus.collectedBoosters.FindAll(x => { return x == Booster.Teleport; }).Count);
                 System.Console.Out.WriteLine("Cloning raccolti    : " + currentStatus.collectedBoosters.FindAll(x => { return x == Booster.Cloning; }).Count);
             }
-            // TODO stampa le posizioni dei wrappies
-            // TODO storico delle azioni se possibile
+            foreach (var g in currentStatus.goals)
+                System.Console.Out.WriteLine(g);
+
         }
     }
 }

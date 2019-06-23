@@ -18,6 +18,8 @@ namespace ICFP2019
             {
                 SolveSingleProblem(SingleProblemPath);
             }
+            Console.WriteLine("FINISH");
+            Console.ReadKey();
         }
 
         private static void SolveSingleProblem(string problemPath)

@@ -22,6 +22,7 @@ namespace ICFP2019
             this.status = status0;
             this.wrappiesStartingActions = wrappiesStartingActions;
             this.solution = new List<List<Action>>();
+            this.solution.Add(new List<Action>());
 
             for (int i = 0; i < wrappiesStartingActions.Count; i++)
             {
@@ -40,10 +41,10 @@ namespace ICFP2019
         {
             while (!status.isSolved())
             {
-                //StatisticalPrettyPrinter.printStats(status);
+                StatisticalPrettyPrinter.printStats(status);
                 foreach (var w in status.wrappies)
                 {
-                    //DijkstraPrettyPrinter.printDijkstraMap(status.Map, w);
+                    DijkstraPrettyPrinter.printDijkstraMap(status.Map, w);
                     Action a = null;
                     if (w.LastAction != Action.C)
                     {
@@ -70,9 +71,13 @@ namespace ICFP2019
                         if (d.y == w.Loc.y + 1 && d.x == w.Loc.x) a = Action.W;
                     }
                     status.execute(a, w);
+                    solution[0].Add(a);
                     status.CalculateGoals();
                 }
             }
+            StatisticalPrettyPrinter.printStats(status);
+            DijkstraPrettyPrinter.printDijkstraMap(status.Map, status.wrappies[0]);
+
         }
     }
 }
