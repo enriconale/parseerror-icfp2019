@@ -151,6 +151,15 @@ namespace ICFP2019.Dijkstra
                                 else
                                     pri *= SKIP_PRI;
                             }
+
+                            if (status.boosters.Exists((kvp) =>
+                                kvp.Value.x == x
+                                && kvp.Value.y == y
+                                && kvp.Key == Booster.Manipulator))
+                            {
+                                pri *= GOTO_PRI;
+                            }
+
                         }
 
                         priGoals.Add(new PriGoal { goal = goTo, pri = pri });
