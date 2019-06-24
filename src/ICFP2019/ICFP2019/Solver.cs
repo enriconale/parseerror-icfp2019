@@ -63,14 +63,21 @@ namespace ICFP2019
                         Wrappy.PriPath pp = w.BestShortestPath();
                         int i = 0;
                         Point d = pp.path[i];
-                        a = calculateNextAction(w, a, d);
-                        i++;
-                        while (this.invertAction(a) == w.LastAction && i < pp.path.Count)
-                        {
-                            
-                            a = calculateNextAction(w, a, pp.path[i]);
-                            i++;
-                        }
+
+                        if (d.x == w.Loc.x - 1 && d.y == w.Loc.y) a = Action.A;
+                        else if (d.x == w.Loc.x + 1 && d.y == w.Loc.y) a = Action.D;
+                        else if (d.y == w.Loc.y - 1 && d.x == w.Loc.x) a = Action.S;
+                        else if (d.y == w.Loc.y + 1 && d.x == w.Loc.x) a = Action.W;
+                        else throw new Exception("unexpected: non puo' non esserci una action");
+
+                        //a = calculateNextAction(w, a, d);
+                        //++i;
+                        //while (this.invertAction(a) == w.LastAction && i < pp.path.Count)
+                        //{
+
+                        //    a = calculateNextAction(w, a, pp.path[i]);
+                        //    i++;
+                        //}
                     }
                     status.execute(a, w);
                     status.CalculateGoals();

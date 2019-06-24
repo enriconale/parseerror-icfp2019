@@ -21,7 +21,7 @@ namespace ICFP2019
     public struct PriGoal
     {
         public Goal goal;
-        public int pri;
+        public double pri;
     }
 
     public class Point
