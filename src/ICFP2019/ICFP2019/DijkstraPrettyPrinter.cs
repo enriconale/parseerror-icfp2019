@@ -66,7 +66,7 @@ namespace ICFP2019
                                     int x = wrappy.DistMap[j, i];
                                     if (x < 10) s = x.ToString();
                                     else if (x == int.MaxValue) s = "I";
-                                    else s = "G";
+                                    else s = "+";
                                 }
                                 break;
                             case Tile.Filled:
@@ -128,7 +128,7 @@ namespace ICFP2019
             case Booster.Manipulator:
                 return "M";
             case Booster.FastWheels:
-                return "W";
+                return "F";
             case Booster.Teleport:
                 return "T";
             case Booster.Cloning:
