@@ -8,6 +8,10 @@ namespace ICFP2019
     {
         public static void PrintParsedMap(Status currentStatus, string printerPath)
         {
+            if (Program.noPrint)
+            {
+                return;
+            }
             System.IO.StreamWriter file =
                 new System.IO.StreamWriter(printerPath, false);
             Dictionary<int, Dictionary<int, string>> mappedBoosters = new Dictionary<int, Dictionary<int, string>>();
