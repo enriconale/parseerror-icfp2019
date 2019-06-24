@@ -22,8 +22,6 @@ namespace ICFP2019.Dijkstra
         public static readonly double GOTO_PRI = 0.001;
         public static readonly double SKIP_PRI = 1000.0;
 
-
-        public static readonly int MAX_GOALS = 10;
         private List<Vertex> vertices = new List<Vertex>();
         private Map<Tile> map;
 
@@ -96,7 +94,7 @@ namespace ICFP2019.Dijkstra
             var crossingEdges = new MinHeap<int, int>(N);
             var minVertices = new bool[N];
             minVertices[v.Id] = true;
-            int max_goals = Math.Min(MAX_GOALS, goals.Count);
+            int max_goals = Math.Min(map.H, goals.Count);
 
             foreach (var outgoingEdge in v.OutgoingEdges)
             {
@@ -156,7 +154,7 @@ namespace ICFP2019.Dijkstra
                         }
 
                         priGoals.Add(new PriGoal { goal = goTo, pri = pri });
-                        if (priGoals.Count >= max_goals) goto quit;
+                        //if (priGoals.Count >= max_goals) goto quit;
                         //return new Result { distMap = distMap, priGoals = priGoals };
                     }
                 }

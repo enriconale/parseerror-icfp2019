@@ -140,7 +140,7 @@ namespace ICFP2019
             double r = 0.0;
             foreach (var cand in cands)
             {
-                r += 1.00 / Math.Pow(cand.priGoal.pri, 2.0);
+                r += 1.0 / Math.Pow(cand.priGoal.pri, 2.0);
             }
             return r;
         }
@@ -154,7 +154,7 @@ namespace ICFP2019
         private List<Point> findMin(List<Candidate> cands)
         {
             if (cands.Count == 0) throw new Exception("empty list of candidates");
-            cands.Sort((c1, c2) => (int) (c1.priGoal.pri - c2.priGoal.pri));
+            cands.Sort((c1, c2) => -(c1.priGoal.pri.CompareTo(c2.priGoal.pri)));
             return cands[0].path;
         }
 
@@ -183,13 +183,16 @@ namespace ICFP2019
             double pE = priOfCandidates(E);
             double pW = priOfCandidates(W);
 
-            if (pN > pS && pN > pW && pN > pE)
+            if (N.Count > 0 && pN >= pS && pN >= pW && pN >= pE)
                 return new PriPath { pri = pN, path = findMin(N) };
-            if (pS > pN && pS > pW && pS > pE)
+            if (S.Count > 0 && pS >= pN && pS >= pW && pS >= pE)
                 return new PriPath { pri = pS, path = findMin(S) };
-            if (pW > pN && pW > pS && pW > pE)
+            if (W.Count > 0 && pW >= pN && pW >= pS && pW >= pE)
                 return new PriPath { pri = pW, path = findMin(W) };
-            else return new PriPath { pri = pE, path = findMin(E) };
+            if (E.Count > 0 && pE >= pN && pE >= pS && pE >= pW)
+                return new PriPath { pri = pE, path = findMin(E) };
+
+            else throw new Exception("unexpected: nessun candidate per nessuna direzione");
         }
 
     }
