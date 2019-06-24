@@ -49,12 +49,12 @@ namespace ICFP2019
                 System.Console.Write(b.ToString() + " ");
             }
             System.Console.Out.WriteLine("");
-            System.Console.Write("GOAL CORRENTI OGGETTO STATUS: ");
-            foreach (var goal in currentStatus.goals)
-            {
-                System.Console.Write(goal.ToString() + " ");
-            }
-            System.Console.Out.WriteLine("");
+//            System.Console.Write("GOAL CORRENTI OGGETTO STATUS: ");
+//            foreach (var goal in currentStatus.goals)
+//            {
+//                System.Console.Write(goal.ToString() + " ");
+//            }
+//            System.Console.Out.WriteLine("");
         }
     }
 }

@@ -9,6 +9,17 @@ namespace ICFP2019
         public static void printDijkstraMap(Map<Tile> parsedMap, Wrappy wrappy)
         {
             System.Console.Out.WriteLine("================ POSIZIONE WRAPPY (" + wrappy.Loc.x + ", " + wrappy.Loc.y + ") ================");
+            string usingBooster = "WRAPPY STA USANDO: ";
+            if (wrappy.remainingFastWheel > 0)
+            {
+                usingBooster += "FASTWHEEL, ";
+            }
+
+            if (wrappy.remainingDrill > 0)
+            {
+                usingBooster += "DRILL";
+            }
+            System.Console.Out.WriteLine(usingBooster);
             if (wrappy.DistMap == null)
             {
                 System.Console.Out.WriteLine("================ Could not print dijkstra map ================");
