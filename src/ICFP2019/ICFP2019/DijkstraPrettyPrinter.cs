@@ -85,10 +85,10 @@ namespace ICFP2019
             for (int i = 0; i < parsedMap.W; ++i)
                 System.Console.Out.Write(i % 10);
             System.Console.Out.WriteLine("");
-//            System.Console.Out.Write("ActionHistory: ");
-//            foreach (var a in wrappy.ActionHistory)
-//                System.Console.Out.Write(a);
-//            System.Console.Out.WriteLine("");
+            System.Console.Out.Write("ActionHistory: ");
+            foreach (var a in wrappy.ActionHistory)
+                System.Console.Out.Write(a);
+            System.Console.Out.WriteLine("");
         }
 
     public static void printDijkstraMap(Map<int> distMap, Wrappy wrappy)

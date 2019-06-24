@@ -164,11 +164,17 @@ namespace ICFP2019
             List<Candidate> S = new List<Candidate>();
             List<Candidate> E = new List<Candidate>();
             List<Candidate> W = new List<Candidate>();
-            Console.Write("WRAPPY GOALS: " );
+            if (!Program.noPrint)
+            {
+                Console.Write("WRAPPY GOALS: " );
+            }
             foreach (var priGoal in priGoals)
             {
                 Goal.GoTo goTo = (Goal.GoTo)priGoal.goal;
-                Console.Write(new Point(goTo.Item1, goTo.Item2) + "[" + priGoal.pri + "] ");
+                if (!Program.noPrint)
+                {
+                    Console.Write(new Point(goTo.Item1, goTo.Item2) + "[" + priGoal.pri + "] ");
+                }
                 List<Point> path = ShortestPath(new Point(goTo.Item1, goTo.Item2));
                 Point p1 = path[0];
                 Candidate c = new Candidate { priGoal = priGoal, path = path };
