@@ -1,5 +1,4 @@
-﻿using System;
-using 
+﻿using System; 
 
 namespace ICFP2019
 {

@@ -63,7 +63,6 @@ namespace ICFP2019
             var newLoc = w.Loc + new Point(a);
             if (map.isMovable(newLoc, Tile.Obstacle))  // TOCHECK throwException? // NO, in case of fast wheel
                 w.Loc = newLoc;
-            else { }
         }
 
 
@@ -110,7 +109,7 @@ namespace ICFP2019
                     q2 = new Point(x, y1);
                     if (Point.FindIntersection(p1, p2, q1, q2, out s))
                     {
-                        if (map[s.x, s.y] == Tile.Obstacle)
+                        if (map.validCoordinate(s) && map[s.x, s.y] == Tile.Obstacle)
                         {
                             return false;
                         }
@@ -126,7 +125,7 @@ namespace ICFP2019
                     q2 = new Point(x1, y);
                     if (Point.FindIntersection(p1, p2, q1, q2, out s))
                     {
-                        if (map[s.x, s.y] == Tile.Obstacle)
+                        if (map.validCoordinate(s) && map[s.x, s.y] == Tile.Obstacle)
                         {
                             return false;
                         }
