@@ -8,6 +8,7 @@ namespace ICFP2019
 {
     partial class Program
     {
+        public const bool noPrint = true;
         public static void Main(string[] args)
         {
             if (LaunchMassiveExecution)
