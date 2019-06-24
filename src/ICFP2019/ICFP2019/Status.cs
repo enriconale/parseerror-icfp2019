@@ -24,13 +24,10 @@ namespace ICFP2019
         public void CalculateGoals()
         {
             goals = new List<Goal>();
-            System.Console.Write("Boosters positions: ");
             foreach (var b in boosters)
             {
                 goals.Add(Goal.NewGoTo(b.Value.x, b.Value.y));
-                System.Console.Write(new Point(b.Value.x, b.Value.y) + " ");
             }
-            System.Console.WriteLine();
             for (int y = 0; y < map.H; ++y)
             {
                 for (int x = 0; x < map.W; ++x)

@@ -28,8 +28,12 @@ namespace ICFP2019
             }
             int totalTiles = currentFilledTiles + currentEmptyTiles;
             double percentFilled = Math.Round((float)currentFilledTiles / totalTiles * 100);
-            System.Console.Out.WriteLine("====================================================================================================");
-            System.Console.Out.WriteLine("Totale tiles        : " + totalTiles + " di cui " + currentFilledTiles + " riempite (" + percentFilled + "%)");
+            System.Console.Out.WriteLine("");
+            System.Console.Out.WriteLine("");
+            System.Console.Out.WriteLine("************************************************************************************************************");
+            System.Console.Out.WriteLine("TILES        : " + totalTiles + " di cui " + currentFilledTiles + " riempite (" + percentFilled + "%)");
+            System.Console.Out.WriteLine("==============================");
+            System.Console.WriteLine("BOOSTERS RACCOLTI: ");
             if (currentStatus.collectedBoosters != null)
             {
                 System.Console.Out.WriteLine("Drill raccolti      : " + currentStatus.collectedBoosters.FindAll(x => { return x == Booster.Drill; }).Count);
@@ -38,7 +42,19 @@ namespace ICFP2019
                 System.Console.Out.WriteLine("Teleport raccolti   : " + currentStatus.collectedBoosters.FindAll(x => { return x == Booster.Teleport; }).Count);
                 System.Console.Out.WriteLine("Cloning raccolti    : " + currentStatus.collectedBoosters.FindAll(x => { return x == Booster.Cloning; }).Count);
             }
-
+            System.Console.Out.WriteLine("==============================");
+            System.Console.Write("BOOSTERS SU MAPPA: ");
+            foreach (var b in currentStatus.boosters)
+            {
+                System.Console.Write(b.ToString() + " ");
+            }
+            System.Console.Out.WriteLine("==============================");
+            System.Console.Write("GOAL CORRENTI OGGETTO STATUS: ");
+            foreach (var goal in currentStatus.goals)
+            {
+                System.Console.Write(goal.ToString() + " ");
+            }
+            System.Console.Out.WriteLine("==============================");
         }
     }
 }
