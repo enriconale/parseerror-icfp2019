@@ -41,7 +41,7 @@ namespace ICFP2019
                 StatisticalPrettyPrinter.printStats(status);
                 foreach (var w in status.wrappies)
                 {
-                    DijkstraPrettyPrinter.printDijkstraMap(status.Map, w);
+                    DijkstraPrettyPrinter.printDijkstraMap(status, w);
                     Action a = null;
                     if (w.LastAction != Action.C)
                     {
@@ -59,7 +59,7 @@ namespace ICFP2019
                     if (a == null)
                     {
                         w.updateDistMap(status);
-                        DijkstraPrettyPrinter.printDijkstraMap(status.Map, w);
+                        DijkstraPrettyPrinter.printDijkstraMap(status, w);
                         Wrappy.PriPath pp = w.BestShortestPath();
                         int i = 0;
                         Point d = pp.path[i];
@@ -84,7 +84,7 @@ namespace ICFP2019
                 }
             }
             StatisticalPrettyPrinter.printStats(status);
-            DijkstraPrettyPrinter.printDijkstraMap(status.Map, status.wrappies[0]);
+            DijkstraPrettyPrinter.printDijkstraMap(status, status.wrappies[0]);
 
         }
 

@@ -6,8 +6,21 @@ namespace ICFP2019
 {
     public class DijkstraPrettyPrinter
     {
-        public static void printDijkstraMap(Map<Tile> parsedMap, Wrappy wrappy)
+        public static void printDijkstraMap(Status status, Wrappy wrappy)
         {
+            Map<Tile> parsedMap = status.map;
+            Dictionary<int, Dictionary<int, string>> mappedBoosters = new Dictionary<int, Dictionary<int, string>>();
+            List<KeyValuePair<Booster, Point>> boosters = status.boosters;
+            foreach (var booster in boosters)
+            {
+                Point boosterLocation = booster.Value;
+                if (!mappedBoosters.ContainsKey(boosterLocation.x))
+                {
+                    mappedBoosters.Add(boosterLocation.x, new Dictionary<int, string>());
+                }
+
+                mappedBoosters[boosterLocation.x].Add(boosterLocation.y, getMappedStringValue(booster.Key));
+            }
             System.Console.Out.WriteLine("================ POSIZIONE WRAPPY (" + wrappy.Loc.x + ", " + wrappy.Loc.y + ") ================");
             string usingBooster = "WRAPPY STA USANDO: ";
             if (wrappy.remainingFastWheel > 0)
@@ -40,10 +53,17 @@ namespace ICFP2019
                         switch (parsedMap[j, i])
                         {
                             case Tile.Empty:
-                                int x = wrappy.DistMap[j, i];
-                                if (x < 10) s = x.ToString();
-                                else if (x == int.MaxValue) s = "I";
-                                else s = "G";
+                                if (mappedBoosters.ContainsKey(j) && mappedBoosters[j].ContainsKey(i))
+                                {
+                                    s = mappedBoosters[j][i];
+                                }
+                                else
+                                {
+                                    int x = wrappy.DistMap[j, i];
+                                    if (x < 10) s = x.ToString();
+                                    else if (x == int.MaxValue) s = "I";
+                                    else s = "G";
+                                }
                                 break;
                             case Tile.Filled:
                                 s = "@";
@@ -89,6 +109,28 @@ namespace ICFP2019
             System.Console.Out.WriteLine("");
         }
         System.Console.Out.WriteLine("");
+    }
+    
+    private static string getMappedStringValue(Booster booster)
+    {
+        switch (booster)
+        {
+            case Booster.Drill:
+                return "D";
+            case Booster.Manipulator:
+                return "M";
+            case Booster.FastWheels:
+                return "W";
+            case Booster.Teleport:
+                return "T";
+            case Booster.Cloning:
+                return "C";
+            case Booster.CloningPlatform:
+                return "X";
+
+            default:
+                return "";
+        }
     }
 }
 }
