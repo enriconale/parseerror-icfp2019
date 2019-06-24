@@ -8,6 +8,10 @@ namespace ICFP2019
     {
         public static void printStats(Status currentStatus)
         {
+            if (Program.noPrint)
+            {
+                return;
+            }
             int currentEmptyTiles = 0;
             int currentFilledTiles = 0;
             Map<Tile> parsedMap = currentStatus.map;

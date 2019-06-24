@@ -8,6 +8,10 @@ namespace ICFP2019
     {
         public static void printDijkstraMap(Status status, Wrappy wrappy)
         {
+            if (Program.noPrint)
+            {
+                return;
+            }
             Map<Tile> parsedMap = status.map;
             Dictionary<int, Dictionary<int, string>> mappedBoosters = new Dictionary<int, Dictionary<int, string>>();
             List<KeyValuePair<Booster, Point>> boosters = status.boosters;
@@ -81,14 +85,18 @@ namespace ICFP2019
             for (int i = 0; i < parsedMap.W; ++i)
                 System.Console.Out.Write(i % 10);
             System.Console.Out.WriteLine("");
-            System.Console.Out.Write("ActionHistory: ");
-            foreach (var a in wrappy.ActionHistory)
-                System.Console.Out.Write(a);
-            System.Console.Out.WriteLine("");
+//            System.Console.Out.Write("ActionHistory: ");
+//            foreach (var a in wrappy.ActionHistory)
+//                System.Console.Out.Write(a);
+//            System.Console.Out.WriteLine("");
         }
 
     public static void printDijkstraMap(Map<int> distMap, Wrappy wrappy)
     {
+        if (Program.noPrint)
+        {
+            return;
+        }
         System.Console.Out.WriteLine("================ Distance map for wrappy at position (" + wrappy.Loc.x + ", " + wrappy.Loc.y + ") ================");
         if (distMap == null)
         {
