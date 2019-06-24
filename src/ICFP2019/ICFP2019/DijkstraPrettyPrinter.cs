@@ -8,7 +8,7 @@ namespace ICFP2019
     {
         public static void printDijkstraMap(Map<Tile> parsedMap, Wrappy wrappy)
         {
-            System.Console.Out.WriteLine("================ Distance map for wrappy at position (" + wrappy.Loc.x + ", " + wrappy.Loc.y + ") ================");
+            System.Console.Out.WriteLine("================ POSIZIONE WRAPPY (" + wrappy.Loc.x + ", " + wrappy.Loc.y + ") ================");
             if (wrappy.DistMap == null)
             {
                 System.Console.Out.WriteLine("================ Could not print dijkstra map ================");
