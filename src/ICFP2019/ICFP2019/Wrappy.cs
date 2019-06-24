@@ -91,6 +91,8 @@ namespace ICFP2019
             return new Point(x, y);
         }
 
+        private Random rand = new Random();
+
         private List<Point> ShortestPath(Point dst)
         {
             //Console.WriteLine("dst = " + dst);
@@ -100,14 +102,20 @@ namespace ICFP2019
             for (int i = distMap[dst]; i > 1; --i)
             {
                 int d = distMap[dst];
-                if (dst.y + 1 <= distMap.H - 1 && distMap[(p = new Point(dst.x, dst.y + 1))] == d - 1
-                   || dst.y > 0 && distMap[(p = new Point(dst.x, dst.y - 1))] == d - 1
-                   || dst.x > 0 && distMap[(p = new Point(dst.x - 1, dst.y))] == d - 1
-                   || dst.x + 1 <= distMap.W - 1 && distMap[(p = new Point(dst.x + 1, dst.y))] == d - 1)
+                Point[] bs = new Point[4];
+                bs[0] = dst.x > 0 && distMap[p = new Point(dst.x - 1, dst.y)] == d - 1 ? p : null;
+                bs[1] = dst.x + 1 <= distMap.W - 1 && distMap[p = new Point(dst.x + 1, dst.y)] == d - 1 ? p : null;
+                bs[2] = dst.y + 1 <= distMap.H - 1 && distMap[p = new Point(dst.x, dst.y + 1)] == d - 1 ? p: null;
+                bs[3] = dst.y > 0 && distMap[p = new Point(dst.x, dst.y - 1)] == d - 1 ? p : null;
+
+                List<Point> bsf = bs.ToList().FindAll((x) => x != null);
+                if (bsf.Count > 0)
                 {
+                    p = bsf[rand.Next(bsf.Count() - 1)];
                     r.Insert(0, p);
                     dst = p;
                 }
+                else throw new Exception("unexpected: no directions in ShortestPath");
             }
             return r;
         }
@@ -145,7 +153,8 @@ namespace ICFP2019
 
         private List<Point> findMin(List<Candidate> cands)
         {
-            cands.Sort((c1, c2) => c1.priGoal.pri - c2.priGoal.pri);
+            if (cands.Count == 0) throw new Exception("empty list of candidates");
+            cands.Sort((c1, c2) => (int) (c1.priGoal.pri - c2.priGoal.pri));
             return cands[0].path;
         }
 

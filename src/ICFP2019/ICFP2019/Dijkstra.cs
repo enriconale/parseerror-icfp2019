@@ -19,6 +19,11 @@ namespace ICFP2019.Dijkstra
     public class Graph
     {
         public static readonly int UNREACHABLE = int.MaxValue;
+        public static readonly double FASTWHEEL_PRI = 200.0;
+        public static readonly double GOTO_CLONING_PRI = 0.1;
+        public static readonly double SKIP_CLONING_PRI = 1000.0;
+
+
         public static readonly int MAX_GOALS = 10;
         private List<Vertex> vertices = new List<Vertex>();
         private Map<Tile> map;
@@ -111,7 +116,7 @@ namespace ICFP2019.Dijkstra
                 distMap[X, Y] = minEdge.Value;
                 if (minEdge.Value != 0)
                 {
-                    // cerca il GoTo più vicino
+                    // cerca il GoTo di coordinate X, Y (cioè il più vicino, appena estratto dal minheap)
                     int i;
                     if ((i = goals.FindIndex((g) =>
                     {
@@ -119,24 +124,38 @@ namespace ICFP2019.Dijkstra
                         {
                             Goal.GoTo goTo = (Goal.GoTo)g;
                             int x = goTo.Item1, y = goTo.Item2;
-                            if (!status.collectedBoosters.Contains(Booster.Cloning)
-                               && status.boosters.Exists((kvp) =>
-                                    kvp.Value.x == x
-                                    && kvp.Value.y == y
-                                    && kvp.Key == Booster.CloningPlatform))
-                                return false;
-                            if (w.remainingFastWheel > 0
-                                && (Math.Abs(w.Loc.x - x) % 2 == 1
-                                || Math.Abs(w.Loc.y - y) % 2 == 1))
-                                return false;
                             return x == X && y == Y;
                         }
                         else return false;
                     })) >= 0)
                     {
-                        priGoals.Add(new PriGoal { goal = goals[i], pri = minEdge.Value });
-                        if (priGoals.Count >= max_goals)
-                            return new Result { distMap = distMap, priGoals = priGoals };
+                        Goal.GoTo goTo = (Goal.GoTo)goals[i];
+                        int x = goTo.Item1, y = goTo.Item2;
+
+                        double pri = minEdge.Value;
+
+                        if (w.remainingFastWheel > 0
+                            && (Math.Abs(w.Loc.x - x) % 2 == 1
+                            || Math.Abs(w.Loc.y - y) % 2 == 1))
+                            pri *= FASTWHEEL_PRI;
+                        else
+                        {
+                            if (status.boosters.Exists((kvp) =>
+                                kvp.Value.x == x
+                                && kvp.Value.y == y
+                                && kvp.Key == Booster.CloningPlatform))
+                            {
+                                if (status.collectedBoosters.Contains(Booster.Cloning)
+                                    || status.map[x, y] == Tile.Empty)
+                                    pri *= GOTO_CLONING_PRI;
+                                else
+                                    pri *= SKIP_CLONING_PRI;
+                            }
+                        }
+
+                        priGoals.Add(new PriGoal { goal = goTo, pri = pri });
+                        if (priGoals.Count >= max_goals) goto quit;
+                        //return new Result { distMap = distMap, priGoals = priGoals };
                     }
                 }
 
@@ -165,7 +184,7 @@ namespace ICFP2019.Dijkstra
                     }
                 }
             }
-
+            quit:
             return new Result { distMap = distMap, priGoals = priGoals };
         }
 
