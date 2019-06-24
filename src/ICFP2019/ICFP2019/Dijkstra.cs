@@ -19,9 +19,8 @@ namespace ICFP2019.Dijkstra
     public class Graph
     {
         public static readonly int UNREACHABLE = int.MaxValue;
-        public static readonly double FASTWHEEL_PRI = 200.0;
-        public static readonly double GOTO_CLONING_PRI = 0.1;
-        public static readonly double SKIP_CLONING_PRI = 1000.0;
+        public static readonly double GOTO_PRI = 0.001;
+        public static readonly double SKIP_PRI = 1000.0;
 
 
         public static readonly int MAX_GOALS = 10;
@@ -134,10 +133,13 @@ namespace ICFP2019.Dijkstra
 
                         double pri = minEdge.Value;
 
-                        if (w.remainingFastWheel > 0
-                            && (Math.Abs(w.Loc.x - x) % 2 == 1
-                            || Math.Abs(w.Loc.y - y) % 2 == 1))
-                            pri *= FASTWHEEL_PRI;
+                        if (w.remainingFastWheel > 0)
+                            if (Math.Abs(w.Loc.x - x) % 2 == 1
+                                || Math.Abs(w.Loc.y - y) % 2 == 1)
+                                pri *= SKIP_PRI;
+                            else
+                                pri *= GOTO_PRI;
+
                         else
                         {
                             if (status.boosters.Exists((kvp) =>
@@ -147,9 +149,9 @@ namespace ICFP2019.Dijkstra
                             {
                                 if (status.collectedBoosters.Contains(Booster.Cloning)
                                     || status.map[x, y] == Tile.Empty)
-                                    pri *= GOTO_CLONING_PRI;
+                                    pri *= GOTO_PRI;
                                 else
-                                    pri *= SKIP_CLONING_PRI;
+                                    pri *= SKIP_PRI;
                             }
                         }
 

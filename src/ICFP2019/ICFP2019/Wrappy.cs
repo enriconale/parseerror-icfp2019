@@ -168,7 +168,7 @@ namespace ICFP2019
             foreach (var priGoal in priGoals)
             {
                 Goal.GoTo goTo = (Goal.GoTo)priGoal.goal;
-                Console.Write(new Point(goTo.Item1, goTo.Item2) + " ");
+                Console.Write(new Point(goTo.Item1, goTo.Item2) + "[" + priGoal.pri + "] ");
                 List<Point> path = ShortestPath(new Point(goTo.Item1, goTo.Item2));
                 Point p1 = path[0];
                 Candidate c = new Candidate { priGoal = priGoal, path = path };
